@@ -145,6 +145,10 @@ const useAuthStore = () => {
             dispatch(setAutenticated(true))
             await handleLoginWithToken()
         }
+        else
+        {
+            dispatch(setAutenticated(false))
+        }
 
     }
 

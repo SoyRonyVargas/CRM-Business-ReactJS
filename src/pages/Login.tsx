@@ -1,6 +1,6 @@
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import LogoImg from '../assets/images/logo-login.png'
 import useAuthStore from '../hooks/useAuthStore'
-import LogoImg from '../assets/images/logo.png'
 import CIcon from '@coreui/icons-react'
 import { string, object } from 'yup'
 import { AuthUser } from '../types'
@@ -160,7 +160,7 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody style={{ paddingTop: 0 }}>
                   <Logo />
-                  <p className="text-medium-emphasis text-center">Inicia sesión en tu cuenta</p>
+                  <p className="text-medium-emphasis text-center mt-3">Inicia sesión en tu cuenta</p>
                   <Formulario />
                 </CCardBody>
               </CCard>

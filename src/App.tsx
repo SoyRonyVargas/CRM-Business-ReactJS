@@ -45,8 +45,9 @@ const App = () => {
               :
               <>
                 {
-                  // (isAutenticated && !auth_login.loading) &&
-                  (isAutenticated) &&
+                  // SI ESTA AUTENTICADO Y YA SE CHECO SI HAY TOKEN
+                  (isAutenticated && !auth_login.loading) &&
+                  // (isAutenticated) &&
                   <Fragment>
                     <Route path="/404" element={<Page404 />} />
                     <Route path="/500" element={<Page500 />} />
