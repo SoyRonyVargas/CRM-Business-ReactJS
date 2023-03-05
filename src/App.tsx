@@ -40,12 +40,13 @@ const App = () => {
               <Fragment>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="*" element={<Navigate to="/login" replace={true} />} />
+                <Route path="*" element={<Navigate to="/login" />} />
               </Fragment>
               :
               <>
                 {
-                  (isAutenticated && !auth_login.loading) &&
+                  // (isAutenticated && !auth_login.loading) &&
+                  (isAutenticated) &&
                   <Fragment>
                     <Route path="/404" element={<Page404 />} />
                     <Route path="/500" element={<Page500 />} />

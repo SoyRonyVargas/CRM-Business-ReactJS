@@ -1,6 +1,6 @@
-import { setAuthError, setUsuario , setCargando, setUsuarioWithToken } from '../redux/auth/authSlice'
-import { AUTH_LOGIN_USER , AUTH_OBTENER_USUARIO } from '../graphql/auth'
+import { setAuthError, setUsuario , setCargando, setAutenticated, setCerrarSesion } from '../redux/auth/authSlice'
 import { AuthUser, AutenticatedUser, WrapperQuery, Usuario } from '../types'
+import { AUTH_LOGIN_USER , AUTH_OBTENER_USUARIO } from '../graphql/auth'
 import { useAppDispatch, useAppSelector } from './useStore'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
@@ -18,6 +18,20 @@ const useAuthStore = () => {
     const loadingAuthLogin = useAppSelector( store => store.auth.loading )
     const isAutenticated = useAppSelector( store => store.auth.logged )
     const errorAuthLogin = useAppSelector( store => store.auth.error )
+
+    const handleCerrarSesion = () => {
+
+        try
+        {
+            window.localStorage.removeItem(NAME_STORAGE)
+            dispatch(setCerrarSesion())
+        }
+        catch(err)
+        {
+            dispatch(setCerrarSesion())
+        }
+
+    }
 
     const handleObtenerToken = () : string | null => {
 
@@ -73,7 +87,7 @@ const useAuthStore = () => {
                 usuario: data.obtenerUsuario
             }))
 
-            navigate("/")
+            // navigate("/")
             
         }
         catch(err)
@@ -128,12 +142,14 @@ const useAuthStore = () => {
         
         if( token )
         {
+            dispatch(setAutenticated(true))
             await handleLoginWithToken()
         }
 
     }
 
     return {
+        handleCerrarSesion,
         checkAuthOnInit,
         handleLogin,
         isAutenticated, 

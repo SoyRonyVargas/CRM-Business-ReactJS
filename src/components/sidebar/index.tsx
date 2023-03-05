@@ -1,7 +1,7 @@
 import { CImage, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
 import { selectSideBarState, setSideBarState } from '../../redux/auth/authSlice'
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore'
-import LOGO from '../../assets/images/logo.png'
+import LOGO from '../../assets/images/png/logo.png'
 import { AppSidebarNav } from '../sidebarnav'
 import { LogoContainer } from '../../styled'
 import { useSelector } from 'react-redux'

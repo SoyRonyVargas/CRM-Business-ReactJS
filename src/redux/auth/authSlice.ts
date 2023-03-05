@@ -14,7 +14,7 @@ export type AuthState = {
 const initialState: AuthState = {
   sidebarShow: true,
   loading: false,
-  logged: false,
+  logged: true,
   error: null,
   token: null,
   user: null,
@@ -33,6 +33,9 @@ export const authSlice = createSlice({
       state.error = null
       state.logged = true
     },
+    setAutenticated: ( state , { payload }: PayloadAction<boolean> ) => {
+      state.logged = payload
+    },
     setUsuarioWithToken: ( state , { payload } : PayloadAction<Basic> ) => {
       // state.user = payload
       state.loading = false
@@ -44,11 +47,16 @@ export const authSlice = createSlice({
     },
     setSideBarState: ( state , { payload } : PayloadAction<boolean> ) => {
       state.sidebarShow = payload
+    },
+    setCerrarSesion: ( state ) => {
+      state.logged = false
+      state.token = null
+      state.user = null
     }
   },
 })
 
-export const { setAuthError , setUsuario , setCargando , setUsuarioWithToken , setSideBarState } = authSlice.actions
+export const { setAuthError , setUsuario , setCargando , setUsuarioWithToken , setSideBarState , setAutenticated , setCerrarSesion } = authSlice.actions
 
 export const selectSideBarState = ( state : RootState ) => state.auth.sidebarShow
 

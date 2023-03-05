@@ -2,6 +2,7 @@ import 'react-app-polyfill/stable'
 import 'core-js'
 
 import { ApolloProvider } from '@apollo/client'
+import 'react-toastify/dist/ReactToastify.css'
 import { createRoot } from 'react-dom/client'
 
 import reportWebVitals from './reportWebVitals'
