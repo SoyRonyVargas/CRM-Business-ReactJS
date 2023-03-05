@@ -1,23 +1,20 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { CImage, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
+import { selectSideBarState, setSideBarState } from '../../redux/auth/authSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/useStore'
+import LOGO from '../../assets/images/logo.png'
+import { AppSidebarNav } from '../sidebarnav'
+import { LogoContainer } from '../../styled'
+import { useSelector } from 'react-redux'
+import 'simplebar/dist/simplebar.min.css'
+import SimpleBar from 'simplebar-react'
+import navigation from '../../_nav'
 import React from 'react'
 
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-
-import { AppSidebarNav } from '../sidebarnav'
-
-import { logoNegative } from 'src/assets/brand/logo-negative'
-import { sygnet } from 'src/assets/brand/sygnet'
-
-import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
-
-import navigation from '../../_nav'
-
 const AppSidebar = () => {
-  const dispatch = useDispatch()
-  const unfoldable = useSelector((state: any) => state.sidebarUnfoldable)
-  const sidebarShow = useSelector((state: any) => state.sidebarShow)
+  
+  const dispatch = useAppDispatch()
+  const unfoldable = useAppSelector((state: any) => state.sidebarUnfoldable)
+  const sidebarShow = useSelector(selectSideBarState)
 
   return (
     <CSidebar
@@ -25,12 +22,16 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch({ type: 'set', sidebarShow: visible })
+        dispatch(setSideBarState(visible))
       }}
     >
       <CSidebarBrand className="d-none d-md-flex">
-        <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
+        <LogoContainer>
+          <CImage src={LOGO} />
+        </LogoContainer>
+        {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} /> */}
+        {/* 
+        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
@@ -39,7 +40,7 @@ const AppSidebar = () => {
       </CSidebarNav>
       <CSidebarToggler
         className="d-none d-lg-flex"
-        onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
+        onClick={() => dispatch(setSideBarState(!sidebarShow))}
       />
     </CSidebar>
   )

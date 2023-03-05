@@ -15,3 +15,16 @@ $enable-rtl: true;
 
 // If you want to add custom CSS you can put it here.
 @import "custom";
+
+
+.btn-primary
+{
+    background-color: #3E54AC;
+}
+.container__logo
+{
+    max-width: 250px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}

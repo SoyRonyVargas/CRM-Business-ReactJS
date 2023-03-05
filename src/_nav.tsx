@@ -1,6 +1,6 @@
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { NavElement } from 'types'
+import { NavElement } from './types'
 import React from 'react'
 import {
   cilBell,

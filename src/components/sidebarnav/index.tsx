@@ -2,7 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { CBadge } from '@coreui/react'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { NavElement } from 'types'
+import { NavElement } from '../../types'
 
 type Props = {
   items: NavElement[]
