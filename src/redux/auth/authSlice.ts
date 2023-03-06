@@ -7,11 +7,13 @@ export type AuthState = {
   token: string | null
   error: string | null
   sidebarShow: boolean
+  loadingForm: boolean
   loading: boolean
   logged: boolean
 }
 
 const initialState: AuthState = {
+  loadingForm: false,
   sidebarShow: true,
   loading: false,
   logged: true,
@@ -27,21 +29,25 @@ export const authSlice = createSlice({
     setCargando: ( state , { payload = true } : PayloadAction<boolean> ) => {
       state.loading = payload
     },
+    setCargandoLogin: ( state , { payload = true } : PayloadAction<boolean> ) => {
+      state.loadingForm = payload
+    },
     setUsuario: ( state , { payload } : PayloadAction<AutenticatedUser> ) => {
-      state.user = payload
+      state.loadingForm = false
       state.loading = false
-      state.error = null
+      state.user = payload
       state.logged = true
+      state.error = null
     },
     setAutenticated: ( state , { payload }: PayloadAction<boolean> ) => {
       state.logged = payload
     },
     setUsuarioWithToken: ( state , { payload } : PayloadAction<Basic> ) => {
-      // state.user = payload
       state.loading = false
       state.error = null
     },
     setAuthError: ( state , { payload } : PayloadAction<string> ) => {
+      state.loadingForm = false
       state.error = payload
       state.loading = false
     },
@@ -56,8 +62,9 @@ export const authSlice = createSlice({
   },
 })
 
-export const { setAuthError , setUsuario , setCargando , setUsuarioWithToken , setSideBarState , setAutenticated , setCerrarSesion } = authSlice.actions
+export const { setCargandoLogin , setAuthError , setUsuario , setCargando , setUsuarioWithToken , setSideBarState , setAutenticated , setCerrarSesion } = authSlice.actions
 
 export const selectSideBarState = ( state : RootState ) => state.auth.sidebarShow
+export const selectCargandoLogin = ( state : RootState ) => state.auth.loadingForm
 
 export default authSlice

@@ -1,4 +1,4 @@
-import { setAuthError, setUsuario , setCargando, setAutenticated, setCerrarSesion } from '../redux/auth/authSlice'
+import { setAuthError, setUsuario , setCargando, setAutenticated, setCerrarSesion, selectCargandoLogin, setCargandoLogin } from '../redux/auth/authSlice'
 import { AuthUser, AutenticatedUser, WrapperQuery, Usuario } from '../types'
 import { AUTH_LOGIN_USER , AUTH_OBTENER_USUARIO } from '../graphql/auth'
 import { useAppDispatch, useAppSelector } from './useStore'
@@ -16,6 +16,7 @@ const useAuthStore = () => {
     const navigate = useNavigate();
 
     const loadingAuthLogin = useAppSelector( store => store.auth.loading )
+    const loadingFormLogin = useAppSelector(selectCargandoLogin)
     const isAutenticated = useAppSelector( store => store.auth.logged )
     const errorAuthLogin = useAppSelector( store => store.auth.error )
 
@@ -103,8 +104,10 @@ const useAuthStore = () => {
         try
         {
 
-            dispatch(setCargando())
+            dispatch(setCargandoLogin())
             
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
             const { errors , data } = await nuevoUsuario({
                 variables: {
                     input: auth
@@ -114,6 +117,7 @@ const useAuthStore = () => {
             if( errors ) return dispatch(setAuthError(errors[0].message))
 
             const token = data.authUsuario.token
+            
             const responseToken = handleGuardarToken(token)
 
             if( !responseToken ) throw new Error("Almacenamiento lleno");
@@ -158,6 +162,7 @@ const useAuthStore = () => {
         handleLogin,
         isAutenticated, 
         auth_login: {
+            loadingForm: loadingFormLogin,
             loading: loadingAuthLogin,
             error: errorAuthLogin
         }

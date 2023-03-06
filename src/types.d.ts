@@ -39,9 +39,11 @@ export type AutenticatedUser = {
 export type Cliente = Basic & {
   apellido: string
   telefono: string
+  empresa: string
   vendedor: Basic
   creado: string
   email: string
+  rfc: string
 }
 
 export type CrearCliente = Pick<Cliente, "apellido" | "edad" | "email" | "nombre" | "telefono"> & {

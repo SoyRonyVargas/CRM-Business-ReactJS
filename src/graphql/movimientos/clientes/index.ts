@@ -16,6 +16,23 @@ export const OBTENER_CLIENTES = gql`
     }
 `
 
+export const OBTENER_CLIENTE = gql`
+    query($input: String!) {
+        obtenerCliente(input: $input) {
+            id  
+            nombre
+            apellido
+            email
+            empresa
+            telefono
+            vendedor {
+                id
+                nombre
+            }
+        }
+    }
+`
+
 export const CREAR_CLIENTE = gql`
     mutation crearCliente( $input : CrearCliente )
     {

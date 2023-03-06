@@ -67,7 +67,7 @@ const Formulario = () => {
 
         <CFormInput
           placeholder="Correo electronico"
-          disabled={auth_login.loading}
+          disabled={auth_login.loadingForm}
           onChange={handleChange}
           autoComplete="off"
           name="email"
@@ -91,7 +91,7 @@ const Formulario = () => {
 
         <CFormInput
           autoComplete="current-password"
-          disabled={auth_login.loading}
+          disabled={auth_login.loadingForm}
           placeholder="Contraseña"
           onChange={handleChange}
           type="password"
@@ -113,14 +113,14 @@ const Formulario = () => {
           
             <CButton
               className='btn btn-primary d-block mb-2'
-              disabled={auth_login.loading}
+              disabled={auth_login.loadingForm}
               color="primary"
               type='submit'
               size='lg'
             >
 
               {
-                auth_login.loading
+                auth_login.loadingForm
                 ?
                 <CSpinner color="light"/>
                 : 

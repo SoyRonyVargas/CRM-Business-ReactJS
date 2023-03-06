@@ -1,16 +1,44 @@
-import { CREAR_CLIENTE, OBTENER_CLIENTES } from '../graphql/movimientos/clientes'
+import { CREAR_CLIENTE, OBTENER_CLIENTE, OBTENER_CLIENTES } from '../graphql/movimientos/clientes'
+import { ApolloCache, useLazyQuery , useMutation, useQuery } from '@apollo/client'
 import { Cliente, ClienteLight, CrearCliente, WrapperQuery } from '../types'
-import { useLazyQuery , useMutation } from '@apollo/client'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
+type Cache = {
+    
+}
 
 const useClientesStore = () => {
     
-    const [ obtenerClientes , { loading } ] = useLazyQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES)
+    
     const [ loadingCreateCliente , setLoadingCreateCliente ] = useState<boolean>(false)
-    const [ crearCliente ] = useMutation<ClienteLight>(CREAR_CLIENTE)
-    const [ clientes , setClientes ] = useState<Cliente[]>([])
+    const { loading , data }  = useQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES)
+    // const obtenerClienteQuery = useState<Cliente | null>(null)
+
+
+    const [ crearCliente ] = useMutation<ClienteLight>(CREAR_CLIENTE , {
+        update: ( cache : ApolloCache<any> , { data }) => {
+            
+            const { obtenerClientesVendedor } : WrapperQuery<Cliente[]> = cache.readQuery({ query: OBTENER_CLIENTES })
+
+            let clientes = [
+                ...obtenerClientesVendedor,
+                data
+            ]
+
+            cache.writeQuery({
+                query: OBTENER_CLIENTES,
+                data: {
+                    clientes: clientes,
+                    obtenerClientesVendedor: clientes
+                }
+            })
+
+            return clientes
+
+        }
+    })
+    
     const [ error , setError ] = useState<string | null>(null)
 
     const navigate = useNavigate()
@@ -20,9 +48,9 @@ const useClientesStore = () => {
         try
         {
             
-            const { data } = await obtenerClientes()
+            // const { data } = await obtenerClientes()
 
-            setClientes(() => data.obtenerClientesVendedor)
+            // setClientes(() => data.obtenerClientesVendedor)
 
         }
         catch(err)
@@ -44,6 +72,11 @@ const useClientesStore = () => {
                     input: cliente
                 }
             })
+
+            if( errors )
+            {
+                throw new Error()
+            }
 
             if( errors ) {
                 
@@ -87,10 +120,24 @@ const useClientesStore = () => {
 
     }
 
+    const handleObtenerCliente = async ( id : string ) => {
+
+        // await obtenerClienteQuery({
+        //     variables: {
+        //       input: id
+        //     }
+        // })
+
+    }
+
     return {
         error,
-        clientes,
+        clientes: data?.obtenerClientesVendedor || [],
         loading,
+        edit: {
+            // cliente: cliente,
+            handleObtenerCliente
+        },
         handleCreateCliente,
         loadingCreateCliente,
         handleObtenerClientes,

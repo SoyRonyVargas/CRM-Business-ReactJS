@@ -1,6 +1,7 @@
 import { CBadge, CButton, CCard, CCardBody, CCardHeader, CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react'
 import useClientesStore from '../../../hooks/useClientesStore'
 import { cilPencil, cilPlus, cilTrash } from '@coreui/icons'
+import useUtils from '../../../hooks/useUtils'
 import React , { useEffect } from 'react'
 import CIcon from '@coreui/icons-react'
 import { Link } from "react-router-dom";
@@ -8,6 +9,7 @@ import { Link } from "react-router-dom";
 const MainClientesView = () => {
 
   const { handleObtenerClientes , clientes, loading } = useClientesStore()
+  const { handleRenderDate } = useUtils()
 
   useEffect( () => { handleObtenerClientes() } , [] )
 
@@ -43,7 +45,7 @@ const MainClientesView = () => {
               </CTableHead>
               <CTableBody>
                 {
-                  (!loading && clientes) && clientes?.map( cliente => {
+                  (!loading && clientes) && clientes.map( cliente => {
                     return (
                       <CTableRow id={cliente.id}>
                         <CTableHeaderCell scope="col"> { cliente.nombre } { cliente.apellido} </CTableHeaderCell>
@@ -52,12 +54,16 @@ const MainClientesView = () => {
                         <CTableHeaderCell scope="col"> 
                           <CBadge color="success">ACTIVO</CBadge>
                         </CTableHeaderCell>
-                        <CTableHeaderCell scope="col"> { new Date(cliente.creado || new Date()).toDateString() } </CTableHeaderCell>
+                        <CTableHeaderCell scope="col"> 
+                          { handleRenderDate(cliente.creado) } 
+                        </CTableHeaderCell>
                         <CTableHeaderCell scope="col">  
                           
-                          <CButton color="warning" className=''>
-                            <CIcon icon={cilPencil} />
-                          </CButton>
+                          <Link to={`/movimientos/clientes/edit/${cliente.id}`}>
+                            <CButton color="warning" className=''>
+                              <CIcon icon={cilPencil} />
+                            </CButton>
+                          </Link>
                           
                           <CButton color="danger" className='mx-1'>
                             <CIcon icon={cilTrash} />
