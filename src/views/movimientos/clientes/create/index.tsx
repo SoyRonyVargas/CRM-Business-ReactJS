@@ -9,15 +9,15 @@ import { useFormik } from 'formik'
 const CreateClienteView = () => {
   
     const { handleCreateCliente , loadingCreateCliente } = useClientesStore()
-
+    
     const initialValues : CrearCliente = {
+        fecha_nacimiento: new Date(),
         nombre: '',
         apellido: '',
         email: '',
         telefono: '',
         empresa: '',
         rfc: '',
-        edad: 30
     }
 
     

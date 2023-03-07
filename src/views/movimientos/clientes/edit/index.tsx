@@ -1,34 +1,27 @@
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CForm, CFormInput, CRow } from '@coreui/react'
 import { OBTENER_CLIENTE } from '../../../../graphql/movimientos/clientes'
-import { Cliente, CrearCliente, WrapperQuery } from '../../../../types'
+import { ActualizarCliente, Cliente, CrearCliente, WrapperQuery } from '../../../../types'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { useFormik } from 'formik'
 import { cilSave } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { createClienteSchema } from '../../../../validations/movimientos/clientes'
+import useClientesStore from '../../../../hooks/useClientesStore'
 
 const EditClienteView = () => {
 
   const { id } = useParams<"id">()
   
-  const initialValues : CrearCliente = {
-    nombre: '',
-    apellido: '',
-    email: '',
-    telefono: '',
-    empresa: '',
-    rfc: '',
-    edad: 30
-}
-
+  const { edit: { handleActualizarCliente , loading } } = useClientesStore()
+  
   const { data: cliente } = useQuery<WrapperQuery<Cliente>>(OBTENER_CLIENTE, {
     variables: {
       input: id 
     }
   })
 
-  const loadingCreateCliente = false
+  const loadingCreateCliente = loading
 
   const { 
       handleChange,
@@ -38,9 +31,10 @@ const EditClienteView = () => {
   } = useFormik<Cliente>({
       enableReinitialize: true,
       initialValues: cliente?.obtenerCliente,
-      onSubmit: ( values ) => {
-
-      },
+      onSubmit: ( values ) => handleActualizarCliente({
+        ...values,
+        vendedor: values.vendedor.id
+      }),
       // validationSchema: createClienteSchema
   })
 
@@ -163,6 +157,7 @@ const EditClienteView = () => {
                                 onChange={handleChange}
                                 placeholder="RFC..."
                                 autoComplete="none"
+                                value={values?.rfc}
                                 label="RFC"
                                 type="text"
                                 name="rfc"

@@ -25,6 +25,8 @@ export const OBTENER_CLIENTE = gql`
             email
             empresa
             telefono
+            fecha_nacimiento
+            rfc
             vendedor {
                 id
                 nombre
@@ -42,6 +44,14 @@ export const CREAR_CLIENTE = gql`
             creado
             vendedor
             apellido
+        }
+    }
+`
+
+export const ACTUALIZAR_CLIENTE = gql`
+    mutation actualizarCliente( $input: ActualizarCliente ){
+        actualizarCliente( input: $input ){
+            id
         }
     }
 `

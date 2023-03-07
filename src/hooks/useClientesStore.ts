@@ -1,20 +1,19 @@
-import { CREAR_CLIENTE, OBTENER_CLIENTE, OBTENER_CLIENTES } from '../graphql/movimientos/clientes'
-import { ApolloCache, useLazyQuery , useMutation, useQuery } from '@apollo/client'
-import { Cliente, ClienteLight, CrearCliente, WrapperQuery } from '../types'
-import { useNavigate, useParams } from 'react-router-dom'
+import { ACTUALIZAR_CLIENTE, CREAR_CLIENTE, OBTENER_CLIENTES } from '../graphql/movimientos/clientes'
+import { ApolloCache, useMutation, useQuery } from '@apollo/client'
+import { ActualizarCliente, Cliente, ClienteLight, CrearCliente, WrapperQuery } from '../types'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
+
 type Cache = {
     
 }
 
 const useClientesStore = () => {
     
-    
     const [ loadingCreateCliente , setLoadingCreateCliente ] = useState<boolean>(false)
     const { loading , data }  = useQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES)
-    // const obtenerClienteQuery = useState<Cliente | null>(null)
-
+    const [ actualizarCliente, { loading : load_edit_cliente } ] = useMutation(ACTUALIZAR_CLIENTE)
 
     const [ crearCliente ] = useMutation<ClienteLight>(CREAR_CLIENTE , {
         update: ( cache : ApolloCache<any> , { data }) => {
@@ -42,6 +41,25 @@ const useClientesStore = () => {
     const [ error , setError ] = useState<string | null>(null)
 
     const navigate = useNavigate()
+
+    const handleActualizarCliente = async ( cliente : ActualizarCliente ) => {
+
+        try
+        {
+            
+            await actualizarCliente({
+                variables: {
+                    input: cliente
+                }
+            })
+
+        }
+        catch(err)
+        {
+
+        }
+
+    }
 
     const handleObtenerClientes = async () => {
 
@@ -120,23 +138,14 @@ const useClientesStore = () => {
 
     }
 
-    const handleObtenerCliente = async ( id : string ) => {
-
-        // await obtenerClienteQuery({
-        //     variables: {
-        //       input: id
-        //     }
-        // })
-
-    }
-
     return {
         error,
         clientes: data?.obtenerClientesVendedor || [],
         loading,
         edit: {
             // cliente: cliente,
-            handleObtenerCliente
+            loading: load_edit_cliente,
+            handleActualizarCliente
         },
         handleCreateCliente,
         loadingCreateCliente,
