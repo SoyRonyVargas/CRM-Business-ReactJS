@@ -1,4 +1,4 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CForm, CFormInput, CRow } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CForm, CFormInput, CRow, CSpinner } from '@coreui/react'
 import { createClienteSchema } from '../../../../validations/movimientos/clientes'
 import useClientesStore from '../../../../hooks/useClientesStore'
 import { CrearCliente } from '../../../../types'
@@ -8,7 +8,7 @@ import { useFormik } from 'formik'
 
 const CreateClienteView = () => {
   
-    const { handleCreateCliente , loadingCreateCliente } = useClientesStore()
+    const { handleCreateCliente , loading : loadingCreateCliente } = useClientesStore()
     
     const initialValues : CrearCliente = {
         fecha_nacimiento: new Date(),
@@ -151,8 +151,19 @@ const CreateClienteView = () => {
 
                     <div className='mb- d-flex align-items-center justify-content-end'> 
                         <CButton disabled={loadingCreateCliente} type="submit" color="primary" shape="rounded-0">
-                            <CIcon icon={cilSave} className="mr-1" />
-                            Guardar Cliente
+                            {
+                                !loadingCreateCliente
+                                ?
+                                <>
+                                    <CIcon icon={cilSave} className="mr-1" />
+                                    Guardar Cliente
+                                </>
+                                :
+                                <>
+                                    <CSpinner className='mr-1' size='sm' />
+                                    Guardando...
+                                </>
+                            }
                         </CButton>
                     </div>
                 

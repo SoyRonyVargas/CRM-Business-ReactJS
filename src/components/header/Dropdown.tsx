@@ -40,7 +40,7 @@ const AppHeaderDropdown : FC<{}> = () => {
 
         <CDropdownDivider />
         
-        <CDropdownItem onClick={handleCerrarSesion}>
+        <CDropdownItem href="#" onClick={handleCerrarSesion}>
           <CIcon icon={cilAccountLogout} className="me-2" />
           Cerrar Sesión
         </CDropdownItem>

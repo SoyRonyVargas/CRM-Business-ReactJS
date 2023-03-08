@@ -15,6 +15,12 @@ import {
   cilPuzzle,
   cilStar,
   cilTransfer,
+  cilArrowCircleRight,
+  cilMoney,
+  cilPeople,
+  cilDollar,
+  cilShortText,
+  cilScreenDesktop,
 } from '@coreui/icons'
 
 const _nav: NavElement[] = [
@@ -43,17 +49,25 @@ const _nav: NavElement[] = [
         component: CNavItem,
         name: 'Entradas',
         to: '/movimientos/entradas',
+        icon: <CIcon icon={cilArrowCircleRight} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Productos',
+        to: '/movimientos/productos',
+        icon: <CIcon icon={cilScreenDesktop} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Ventas',
         to: '/movimientos/ventas',
+        icon: <CIcon icon={cilShortText} customClassName="nav-icon" />,
       },
       {
         component: CNavItem,
         name: 'Clientes',
         to: '/movimientos/clientes',
-        // icon: <CIcon icon={cilContact} customClassName="nav-icon" />,
+        icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
       },
     ],
   },

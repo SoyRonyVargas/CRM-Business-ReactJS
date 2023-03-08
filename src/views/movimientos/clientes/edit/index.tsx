@@ -1,4 +1,4 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CForm, CFormInput, CRow } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CForm, CFormInput, CRow, CSpinner } from '@coreui/react'
 import { OBTENER_CLIENTE } from '../../../../graphql/movimientos/clientes'
 import { ActualizarCliente, Cliente, CrearCliente, WrapperQuery } from '../../../../types'
 import { useParams } from 'react-router-dom'
@@ -53,7 +53,7 @@ const EditClienteView = () => {
         <CCard>   
             <CCardHeader>
                 <strong>
-                    Cliente Nuevo
+                    Actualizar Cliente
                 </strong>
             </CCardHeader>
             <CCardBody>
@@ -169,8 +169,19 @@ const EditClienteView = () => {
 
                     <div className='mb- d-flex align-items-center justify-content-end'> 
                         <CButton disabled={loadingCreateCliente} type="submit" color="primary" shape="rounded-0">
-                            <CIcon icon={cilSave} className="mr-1" />
-                            Guardar Cliente
+                            {
+                                !loadingCreateCliente
+                                ?
+                                <>
+                                    <CIcon icon={cilSave} className="mr-1" />
+                                    Guardar Cliente
+                                </>
+                                :
+                                <>
+                                    <CSpinner className='mr-1' size='sm' />
+                                    Guardando...
+                                </>
+                            }
                         </CButton>
                     </div>
                 

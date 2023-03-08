@@ -33,3 +33,12 @@ $enable-rtl: true;
 {
     margin-right: 0.25rem;
 }
+
+.nav-link-custom
+{
+    padding-left: 0 !important;
+    a > svg
+    {
+        margin-left: 15% !important;
+    }
+}

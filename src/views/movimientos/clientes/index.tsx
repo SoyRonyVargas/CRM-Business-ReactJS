@@ -1,17 +1,20 @@
-import { CBadge, CButton, CCard, CCardBody, CCardHeader, CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react'
+import { CBadge, CButton, CCard, CCardBody, CCardHeader, CSpinner, CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react'
+import { OBTENER_CLIENTES } from '../../../graphql/movimientos/clientes'
 import useClientesStore from '../../../hooks/useClientesStore'
 import { cilPencil, cilPlus, cilTrash } from '@coreui/icons'
+import { Cliente, WrapperQuery } from '../../../types'
 import useUtils from '../../../hooks/useUtils'
-import React , { useEffect } from 'react'
+import { useQuery } from '@apollo/client'
+import { Link } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
-import { Link } from "react-router-dom";
 
 const MainClientesView = () => {
 
-  const { handleObtenerClientes , clientes, loading } = useClientesStore()
+  const { handleDeleteCliente, loading_del } = useClientesStore()
+
   const { handleRenderDate } = useUtils()
 
-  useEffect( () => { handleObtenerClientes() } , [] )
+  const { data } = useQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES)
 
   return (
     <div>
@@ -45,7 +48,9 @@ const MainClientesView = () => {
               </CTableHead>
               <CTableBody>
                 {
-                  (!loading && clientes) && clientes.map( cliente => {
+                  data?.obtenerClientesVendedor || !loading_del
+                  ?
+                  data?.obtenerClientesVendedor.map( cliente => {
                     return (
                       <CTableRow id={cliente.id}>
                         <CTableHeaderCell scope="col"> { cliente.nombre } { cliente.apellido} </CTableHeaderCell>
@@ -60,12 +65,12 @@ const MainClientesView = () => {
                         <CTableHeaderCell scope="col">  
                           
                           <Link to={`/movimientos/clientes/edit/${cliente.id}`}>
-                            <CButton color="warning" className=''>
+                            <CButton disabled={loading_del} color="warning" className=''>
                               <CIcon icon={cilPencil} />
                             </CButton>
                           </Link>
                           
-                          <CButton color="danger" className='mx-1'>
+                          <CButton disabled={loading_del} onClick={() => handleDeleteCliente(cliente)} color="danger" className='mx-1'>
                             <CIcon icon={cilTrash} />
                           </CButton>
                           
@@ -77,10 +82,30 @@ const MainClientesView = () => {
                       </CTableRow>
                     )
                   })
+                  :
+                  <CTableRow>
+                        <CTableHeaderCell scope="col"> 
+                          <CSpinner />
+                        </CTableHeaderCell>
+                        <CTableHeaderCell scope="col"> 
+                          <CSpinner />
+                        </CTableHeaderCell>
+                        <CTableHeaderCell scope="col"> 
+                          <CSpinner />
+                        </CTableHeaderCell>
+                        <CTableHeaderCell scope="col"> 
+                          <CSpinner />
+                        </CTableHeaderCell>
+                        <CTableHeaderCell scope="col"> 
+                          <CSpinner />
+                        </CTableHeaderCell>
+                        <CTableHeaderCell scope="col">  
+                          <CSpinner />
+                        </CTableHeaderCell>
+                  </CTableRow>
                 }
-              </CTableBody>          </CTable>
-          <blockquote className="blockquote mb-0">
-          </blockquote>
+              </CTableBody>          
+            </CTable>
         </CCardBody>
       </CCard>
     </div>

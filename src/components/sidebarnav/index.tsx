@@ -12,7 +12,7 @@ export const AppSidebarNav = ({ items }: Props) => {
   
   const location = useLocation()
   
-  const navLink = (name: string, icon: any, badge?: any) => {
+  const navLink = (name: string, icon: any, badge?: any , className: string = "") => {
     return (
       <>
         
@@ -41,8 +41,11 @@ export const AppSidebarNav = ({ items }: Props) => {
           })}
         key={index}
         {...rest}
+        className={`nav-link-custom`}
       >
-        {navLink(name, icon, badge)}
+        {
+          navLink(name, icon, badge )
+        }
       </Component>
     )
   }

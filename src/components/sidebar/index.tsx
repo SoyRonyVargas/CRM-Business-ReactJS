@@ -29,9 +29,6 @@ const AppSidebar = () => {
         <LogoContainer>
           <CImage src={LOGO} />
         </LogoContainer>
-        {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} /> */}
-        {/* 
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} /> */}
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

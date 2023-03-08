@@ -48,6 +48,12 @@ export const CREAR_CLIENTE = gql`
     }
 `
 
+export const ELIMINAR_CLIENTE = gql`
+    mutation eliminarCliente( $input: ID! ){
+        eliminarCliente( input: $input )
+    }
+`
+
 export const ACTUALIZAR_CLIENTE = gql`
     mutation actualizarCliente( $input: ActualizarCliente ){
         actualizarCliente( input: $input ){

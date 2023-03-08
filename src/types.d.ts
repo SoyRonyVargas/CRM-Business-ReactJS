@@ -62,3 +62,13 @@ export type ClienteLight = Cliente & {
   creado: string
   id: string
 }
+
+// PRODUCTOS 
+
+export type Producto = Basic & {
+  descripcion: string
+  existencias: number
+  imagen: string
+  precio: number
+  creado: string
+}
