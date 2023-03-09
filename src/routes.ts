@@ -8,7 +8,7 @@ const OrdenesVentaView = lazy(() => import('./views/movimientos/ordenes_venta'))
 
 const CreateClienteView = lazy( () => import('./views/movimientos/clientes/create'))
 const MainClientesView = lazy(() => import('./views/movimientos/clientes'))
-const EditClienteView = lazy(() => import('./views/movimientos/clientes'))
+const EditClienteView = lazy(() => import('./views/movimientos/clientes/edit'))
 
 // PRODUCTOS
 
