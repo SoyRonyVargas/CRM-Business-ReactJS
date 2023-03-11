@@ -42,7 +42,7 @@ export const authSlice = createSlice({
     setAutenticated: ( state , { payload }: PayloadAction<boolean> ) => {
       state.logged = payload
     },
-    setUsuarioWithToken: ( state , { payload } : PayloadAction<Basic> ) => {
+    setUsuarioWithToken: ( state ) => {
       state.loading = false
       state.error = null
     },

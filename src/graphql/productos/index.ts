@@ -14,3 +14,14 @@ export const OBTENER_PRODUCTOS = gql`
         }
     }
 `
+
+export const CREAR_PRODUCTO = gql`
+   mutation crearProducto( $input:CrearProducto! )
+    {
+        crearProducto( input:$input ){
+            id
+            nombre
+            creado
+        }
+    }
+`

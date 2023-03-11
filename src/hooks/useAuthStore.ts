@@ -81,7 +81,11 @@ const useAuthStore = () => {
                 }
             })
 
-            if( error ) return dispatch(setAuthError(error.message))
+            if( error ){
+                dispatch(setAuthError(error.message))
+                handleCerrarSesion()
+                return;''
+            }
             
             dispatch(setUsuario({
                 token: handleObtenerToken(),

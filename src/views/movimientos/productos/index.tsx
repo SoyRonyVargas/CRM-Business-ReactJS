@@ -1,8 +1,9 @@
 import { OBTENER_PRODUCTOS } from "../../../graphql/productos";
+import { cilPencil, cilPlus, cilTrash } from "@coreui/icons";
 import { Producto, WrapperQuery } from "../../../types";
+import useUtils from "../../../hooks/useUtils";
 import { useQuery } from "@apollo/client";
 import CIcon from "@coreui/icons-react";
-import { cilPencil, cilPlus, cilTrash } from "@coreui/icons";
 import { Link } from "react-router-dom";
 import React from "react";
 import {
@@ -19,7 +20,6 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from "@coreui/react";
-import useUtils from "../../../hooks/useUtils";
 
 
 const MainProductosView = () => {
@@ -57,14 +57,13 @@ const MainProductosView = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {/* {data?.obtenerClientesVendedor || !loading_del ? ( */}
               {data?.obtenerProductos ? (
                 data?.obtenerProductos.map(( producto ) => {
                   return (
                     <CTableRow id={producto.id}>
                       <CTableHeaderCell scope="col">
                         <CImage 
-                          src={producto.imagen} 
+                          src={producto.imagen[0]} 
                           align="start" 
                           height={60} 
                           width={60}

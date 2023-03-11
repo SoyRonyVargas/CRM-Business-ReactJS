@@ -66,9 +66,22 @@ export type ClienteLight = Cliente & {
 // PRODUCTOS 
 
 export type Producto = Basic & {
+  existencias?: number
   descripcion: string
-  existencias: number
+  imagen: string
+  precio: number
+  creado?: string
+  status: number
+}
+
+export type ProductoLight = Basic & {
+  descripcion: string
   imagen: string
   precio: number
   creado: string
+  status: number
 }
+
+export type CrearProducto = Pick<Producto, "descripcion" | "nombre" | "precio" | "status"> & {
+  imagen?: string[]
+};

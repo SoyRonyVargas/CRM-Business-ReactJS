@@ -1,9 +1,14 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+// import { createUploadLink } from 'apollo-upload-client'
+
+const URI = 'http://localhost:4000/graphql'
 
 const httpLink = createHttpLink({
-    uri: 'http://localhost:4000'
+    uri: URI,
 })
+
+// const uploadLink = createUploadLink({ uri : URI })
 
 const authLink = setContext( (_, { headers } ) => {
     
@@ -13,6 +18,7 @@ const authLink = setContext( (_, { headers } ) => {
       headers: {
         ...headers,
         authorization: token ? `${token}` : "",
+        'Apollo-Require-Preflight': 'true'
       }
     }
 });
