@@ -20,7 +20,7 @@ const useUtils = () => {
         currency: 'MXN',
       })
       
-      return formatter.format(monto)
+      return `${formatter.format(monto)} MXN`
 
     }
 

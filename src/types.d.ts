@@ -68,7 +68,7 @@ export type ClienteLight = Cliente & {
 export type Producto = Basic & {
   existencias?: number
   descripcion: string
-  imagen: string
+  imagen: string[]
   precio: number
   creado?: string
   status: number
@@ -85,3 +85,10 @@ export type ProductoLight = Basic & {
 export type CrearProducto = Pick<Producto, "descripcion" | "nombre" | "precio" | "status"> & {
   imagen?: string[]
 };
+
+export type QueryProductos ={
+  nombre: string
+  precio: number
+  status: number
+  pagina: number
+}

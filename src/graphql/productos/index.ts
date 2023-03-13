@@ -15,6 +15,21 @@ export const OBTENER_PRODUCTOS = gql`
     }
 `
 
+export const OBTENER_PRODUCTO = gql`
+    query obtenerProducto( $input:String! )
+    {
+        obtenerProducto(input: $input) {
+            id
+            nombre
+            imagen
+            descripcion
+            status
+            precio
+            existencias
+        }
+    }
+`
+
 export const CREAR_PRODUCTO = gql`
    mutation crearProducto( $input:CrearProducto! )
     {
@@ -25,3 +40,19 @@ export const CREAR_PRODUCTO = gql`
         }
     }
 `
+
+export const QUERY_PRODUCTOS = gql`
+    query obtenerProductos($input: QueryProductos!) {
+        obtenerProductos(input:$input){
+            creado
+            descripcion
+            existencias
+            nombre
+            id
+            imagen
+            status
+            precio
+        }
+    }
+`
+

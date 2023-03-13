@@ -21,6 +21,9 @@ import {
   cilDollar,
   cilShortText,
   cilScreenDesktop,
+  cilCart,
+  cilTv,
+  cilBook,
 } from '@coreui/icons'
 
 const _nav: NavElement[] = [
@@ -37,7 +40,22 @@ const _nav: NavElement[] = [
   {
     component: CNavGroup,
     name: "Productos",
-    to: "/productos"
+    to: "/productos",
+    icon: <CIcon icon={cilTv} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Carrito',
+        to: '/productos/carrito',
+        icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
+      },
+      {
+        component: CNavItem,
+        name: 'Catalogo',
+        to: '/productos/carrito',
+        icon: <CIcon icon={cilBook} customClassName="nav-icon" />,
+      },
+    ]
   },
   {
     component: CNavGroup,
@@ -71,6 +89,7 @@ const _nav: NavElement[] = [
       },
     ],
   },
+  
 ]
 
 export default _nav
