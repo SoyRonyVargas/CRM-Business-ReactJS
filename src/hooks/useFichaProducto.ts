@@ -1,41 +1,77 @@
+import { Producto, ValuesFicha, WrapperQuery } from '../types'
+import { AGREGAR_CONCEPTO_CARRITO } from '../graphql/carrito'
 import { OBTENER_PRODUCTO } from '../graphql/productos'
-import { Producto, WrapperQuery } from '../types'
-import { useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
-import { FormikConfig, useFormik } from 'formik'
+import { useMutation, useQuery } from '@apollo/client'
+import { toast } from 'react-toastify'
+import { useState } from 'react'
 
 const useFichaProducto = () => {
 
+    const [ loading_create , setLoading ] = useState(false);
+
     const { id } = useParams<"id">()
-    const formik = useFormik<{ cantidad: number }>({
-        initialValues: {
-            cantidad: 0,
-        },
-        // onSubmit: handleSubmit
-    })
+
     const { loading , data : _producto } = useQuery<WrapperQuery<Producto>>(OBTENER_PRODUCTO , {
         variables: {
             input: id
         }
     })
+    
+    const [ handleAgregarConceptoCarrito ] = useMutation<WrapperQuery<any>>( AGREGAR_CONCEPTO_CARRITO )
 
     const producto = _producto?.obtenerProducto || null
 
-    const handleSubmit = async () => {
+    const onSubmit = async ( values : ValuesFicha ) => {
 
-        if( formik.values.cantidad > producto?.existencias )
+        try
         {
-            return formik.setFieldError("cantidad", "Cantidad insuficiente")
+            alert("enviado")
+
+            setLoading(true)
+
+            debugger
+            
+            const { data , errors } = await handleAgregarConceptoCarrito({
+                variables: {
+                    input: {
+                        cantidad: values.cantidad,
+                        producto: id,
+                        importe: 1,
+                        total: 1
+                    }
+                }
+            })
+            
+            setLoading(false)
+
+            if( errors ){
+                toast.error( errors[0].message , {
+                    position: toast.POSITION.BOTTOM_CENTER
+                });
+                return;
+            }
+        }
+        catch(err)
+        {
+            debugger
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            setLoading(false)
+            
+            toast.error( err.message , {
+                position: toast.POSITION.BOTTOM_CENTER
+            });
         }
 
     }
 
-   
-
     return {
+        loading_create,
         producto,
         loading,
-        x: formik
+        onSubmit
     }
 
 }

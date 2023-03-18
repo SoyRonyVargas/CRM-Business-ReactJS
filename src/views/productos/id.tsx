@@ -2,24 +2,21 @@ import RightSide from '../../components/pages/productID/RightSide'
 import LeftSide from '../../components/pages/productID/LeftSide'
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 import useFichaProducto from '../../hooks/useFichaProducto'
+import { Producto, ValuesFicha } from '../../types'
 import React, { createContext } from 'react'
-import { Producto } from '../../types'
-import { FormikConfig } from 'formik'
-
-type Values = {
-    cantidad: number
-}
 
 type ContextFicha = {
+    onSubmit?: ( values : ValuesFicha ) => Promise<void>
+    loading_create: boolean
     producto?: Producto
     loading: boolean
-    formik?: FormikConfig<Values> | null
 }
 
 export const FichaContext = createContext<ContextFicha>({
+    loading_create: false,
     loading: false,
     producto: null,
-    formik: null
+    onSubmit: null
 })
 
 const ProductoIDView = () => {

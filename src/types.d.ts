@@ -92,3 +92,9 @@ export type QueryProductos ={
   status: number
   pagina: number
 }
+
+//FICHA PRODUCTOS 
+
+export type ValuesFicha = {
+  cantidad: number
+}
