@@ -91,4 +91,11 @@ export type QueryProductos ={
   nombre: string
   precio: number
   status: number
+  pagina: number
+}
+
+//FICHA PRODUCTOS 
+
+export type ValuesFicha = {
+  cantidad: number
 }
