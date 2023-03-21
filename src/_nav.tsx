@@ -1,28 +1,14 @@
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { CNavGroup, CNavItem , CNavTitle} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { NavElement } from './types'
 import React from 'react'
 import {
-  cilBell,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilNotes,
-  cilContact,
-  cilPencil,
-  cilPuzzle,
-  cilStar,
   cilTransfer,
   cilArrowCircleRight,
-  cilMoney,
   cilPeople,
-  cilDollar,
   cilShortText,
   cilScreenDesktop,
   cilCart,
-  cilTv,
   cilBook,
 } from '@coreui/icons'
 
@@ -33,31 +19,36 @@ const _nav: NavElement[] = [
   //   to: '/theme/typography',
   //   icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   // },
+  {
+    primary: true,
+    component: CNavTitle,
+    name: 'Components',
+  },
   // {
-  //   component: CNavTitle,
-  //   name: 'Components',
+  //   component: CNavGroup,
+  //   name: "Productos",
+  //   to: "/productos",
+  //   icon: <CIcon icon={cilTv} customClassName="nav-icon" />,
+  //   items: [
+      
+  //   ]
   // },
   {
-    component: CNavGroup,
-    name: "Productos",
-    to: "/productos",
-    icon: <CIcon icon={cilTv} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Carrito',
-        to: '/productos/carrito',
-        icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
-      },
-      {
-        component: CNavItem,
-        name: 'Catalogo',
-        to: '/productos/carrito',
-        icon: <CIcon icon={cilBook} customClassName="nav-icon" />,
-      },
-    ]
+    primary: true,
+    component: CNavItem,
+    name: 'Carrito',
+    to: '/carrito',
+    icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
   },
   {
+    primary: true,
+    component: CNavItem,
+    name: 'Catalogo',
+    to: '/productos',
+    icon: <CIcon icon={cilBook} customClassName="nav-icon" />,
+  },
+  {
+    primary: true,
     component: CNavGroup,
     name: 'Movimientos',
     to: '/base',

@@ -1,18 +1,37 @@
 import { OBTENER_PRODUCTO } from '../graphql/productos'
 import { Producto, WrapperQuery } from '../types'
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { FormikConfig, useFormik } from 'formik'
 
 const useFichaProducto = () => {
 
     const { id } = useParams<"id">()
-    const formik = useFormik<{ cantidad: number }>({
+    
+    type Values = {
+        cantidad: number
+    }
+
+    const [ agregarCarrito ] = useMutation();
+
+    const formik = useFormik<Values>({
         initialValues: {
             cantidad: 0,
         },
-        // onSubmit: handleSubmit
+        onSubmit: ( values : Values ) => {
+
+            if( values.cantidad > producto?.existencias )
+            {
+                
+                formik.setFieldError('cantidad', "Existencias insuficientes")                
+                
+                return;
+
+            }
+
+        }
     })
+
     const { loading , data : _producto } = useQuery<WrapperQuery<Producto>>(OBTENER_PRODUCTO , {
         variables: {
             input: id
@@ -20,17 +39,6 @@ const useFichaProducto = () => {
     })
 
     const producto = _producto?.obtenerProducto || null
-
-    const handleSubmit = async () => {
-
-        if( formik.values.cantidad > producto?.existencias )
-        {
-            return formik.setFieldError("cantidad", "Cantidad insuficiente")
-        }
-
-    }
-
-   
 
     return {
         producto,

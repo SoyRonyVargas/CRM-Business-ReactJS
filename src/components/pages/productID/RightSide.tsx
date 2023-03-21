@@ -52,7 +52,7 @@ const RightSide = () => {
                         type="number"
                         size="lg"
                         name="cantidad"
-                        onChange={formik}
+                        onChange={formik.handle}
                     />
                 </CCol>
 

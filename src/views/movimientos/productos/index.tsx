@@ -1,6 +1,7 @@
 import { OBTENER_PRODUCTOS } from "../../../graphql/productos";
 import { cilPencil, cilPlus, cilTrash } from "@coreui/icons";
 import { Producto, WrapperQuery } from "../../../types";
+import useListQuery from "../../../hooks/useListQuery";
 import useUtils from "../../../hooks/useUtils";
 import { useQuery } from "@apollo/client";
 import CIcon from "@coreui/icons-react";
@@ -22,9 +23,21 @@ import {
 } from "@coreui/react";
 
 
+
 const MainProductosView = () => {
 
-  const { data } = useQuery<WrapperQuery<Producto[]>>(OBTENER_PRODUCTOS)
+  const { busqueda } = useListQuery()
+
+  debugger
+
+  const { data } = useQuery<WrapperQuery<Producto[]>>(OBTENER_PRODUCTOS , {
+    variables: {
+      input: {
+        pagina: busqueda.pagina,
+        status: 0
+      }
+    }
+  })
   
   const { handleRenderDate , handleRenderPrecio } = useUtils()
 

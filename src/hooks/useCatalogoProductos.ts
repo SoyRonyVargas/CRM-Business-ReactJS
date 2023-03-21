@@ -1,16 +1,18 @@
+import { Producto, QueryProductos, WrapperQuery } from '../types'
 import { QUERY_PRODUCTOS } from '../graphql/productos'
 import { useLazyQuery } from '@apollo/client'
-import { Producto, QueryProductos, WrapperQuery } from '../types'
 import { useState , useEffect } from 'react'
 import { useFormik } from 'formik'
+import useListQuery from './useListQuery'
 
 const useCatalogoProductos = () => {
   
     const [ productos , setProductos ] = useState<Producto[]>([])
 
+    const { busqueda } = useListQuery()
+
     const queryProductos : QueryProductos = {
         nombre: "",
-        pagina: 0,
         precio: 0,
         status: 0
     }

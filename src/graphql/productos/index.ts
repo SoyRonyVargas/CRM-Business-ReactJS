@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const OBTENER_PRODUCTOS = gql`
-    query obtenerProductos {
-        obtenerProductos {
+    query obtenerProductos( $input:QueryProductos! ) {
+        obtenerProductos(input:$input) {
             creado
             descripcion
             existencias

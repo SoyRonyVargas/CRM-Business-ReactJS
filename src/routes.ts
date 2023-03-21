@@ -22,7 +22,7 @@ const routes = [
   { path: '/', name: 'Inicio' },
   { path: '/dashboard', name: 'Dashboard', element: OrdenesVentaView },
   { path: '/productos', name: 'Producto', element: CatalogoView },
-  { path: '/productos/:id', name: 'Producto Por ID', element: ProductoIDView },
+  { path: '/producto/:id', name: 'Producto Por ID', element: ProductoIDView },
   { path: '/movimientos/ordenes_venta', name: 'Orden Venta', element: OrdenesVentaView },
   { path: '/movimientos/clientes', name: 'Clientes', element: MainClientesView },
   { path: '/movimientos/clientes/nuevo', name: 'Nuevo', element: CreateClienteView },

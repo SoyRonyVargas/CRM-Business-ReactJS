@@ -11,6 +11,7 @@ export type Basic = {
 
 export type NavElement = {
   component: any
+  primary?: boolean
   icon?: JSX.Element
   name?: string
   to?: string
@@ -90,5 +91,4 @@ export type QueryProductos ={
   nombre: string
   precio: number
   status: number
-  pagina: number
 }

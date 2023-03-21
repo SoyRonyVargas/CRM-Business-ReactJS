@@ -31,7 +31,7 @@ export const AppSidebarNav = ({ items }: Props) => {
   }
 
   const navItem = (item, index) => {
-    const { component, name, badge, icon, ...rest } = item
+    const { component, name, badge, icon, primary , ...rest } = item
     const Component = component
     return (
       <Component
@@ -41,7 +41,7 @@ export const AppSidebarNav = ({ items }: Props) => {
           })}
         key={index}
         {...rest}
-        className={`nav-link-custom`}
+        className={`${!primary ? 'nav-link-custom' : ''}`}
       >
         {
           navLink(name, icon, badge )
