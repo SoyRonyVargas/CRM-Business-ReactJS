@@ -16,6 +16,22 @@ export const OBTENER_CLIENTES = gql`
     }
 `
 
+export const OBTENER_CLIENTES_VENDEDOR = gql`
+    query {
+        obtenerClientesVendedor {
+            id
+            nombre
+            apellido
+            creado
+            email
+            vendedor {
+            id
+            nombre
+            }
+        }
+    }
+`
+
 export const OBTENER_CLIENTE = gql`
     query($input: String!) {
         obtenerCliente(input: $input) {

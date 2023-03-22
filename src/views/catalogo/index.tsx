@@ -1,4 +1,5 @@
 import { CButton, CCard, CCardBody, CCol, CForm, CFormInput, CFormSelect, CRow } from "@coreui/react"
+import CardPlaceHolder from "../../components/card-catalogo/card-loader"
 import useCatalogoProductos from "../../hooks/useCatalogoProductos"
 import CardCatalogo from "../../components/card-catalogo"
 
@@ -62,7 +63,8 @@ const CatalogoView = () => {
       <CCardBody>
       <CRow className="mb-3" xs={{ cols: 1, gutter: 4 }} md={{ cols: 2 }} xl={{ cols: 4 }}>
         {
-          loading == false &&
+          loading == false 
+          ?
           <>
             {
               productos.map( producto => (
@@ -73,6 +75,33 @@ const CatalogoView = () => {
                 </CCol>
               ))
             }
+          </>
+          :
+          <>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
+            <CCol>
+              <CardPlaceHolder/>
+            </CCol>
           </>
         }
       </CRow>

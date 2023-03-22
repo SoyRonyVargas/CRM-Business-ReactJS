@@ -26,12 +26,9 @@ const useFichaProducto = () => {
 
         try
         {
-            alert("enviado")
 
             setLoading(true)
 
-            debugger
-            
             const { data , errors } = await handleAgregarConceptoCarrito({
                 variables: {
                     input: {
@@ -43,14 +40,24 @@ const useFichaProducto = () => {
                 }
             })
             
+            await new Promise(resolve => setTimeout(resolve, 500));
+
             setLoading(false)
 
             if( errors ){
+                
                 toast.error( errors[0].message , {
                     position: toast.POSITION.BOTTOM_CENTER
                 });
+                
                 return;
+
             }
+
+            toast.success("Agregado al carrito", {
+                position: toast.POSITION.BOTTOM_CENTER
+            });
+
         }
         catch(err)
         {
@@ -68,10 +75,10 @@ const useFichaProducto = () => {
     }
 
     return {
-        loading_create,
+        loading: loading_create || loading,
+        loading_create: false,
         producto,
-        loading,
-        onSubmit
+        onSubmit,
     }
 
 }

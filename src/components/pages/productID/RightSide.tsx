@@ -13,6 +13,7 @@ import {
     CListGroup,
     CListGroupItem,
     CRow,
+    CSpinner,
 } from "@coreui/react";
 
 
@@ -21,7 +22,8 @@ const RightSide = () => {
     
     const {
         producto,
-        onSubmit
+        onSubmit,
+        loading
     } = useContext(FichaContext)
     
     const formik = useFormik<ValuesFicha>({
@@ -51,7 +53,7 @@ const RightSide = () => {
 
             <h4 style={{ fontStyle: "italic" }} className="mt-2">
                 Existencias:{" "}
-                <strong style={{ color: "red" }}>{producto?.existencias || 100}</strong>
+                <strong style={{ color: "red" }}>{producto?.existencias}</strong>
             </h4>
 
             {/* <pre>
@@ -66,6 +68,7 @@ const RightSide = () => {
                 
                     <CCol xs={3}>
                         <CFormInput
+                            // disabled={loading || producto?.existencias == 0}
                             className="rounded-0 outline-0"
                             onChange={formik.handleChange}
                             aria-label="lg input example"
@@ -79,13 +82,23 @@ const RightSide = () => {
                     <CCol xs={6}>
                         <CButton
                             style={{ width: "100%" }}
+                            // disabled={loading || producto?.existencias == 0}
                             shape="rounded-0"
                             color="primary"
                             type="submit"
                             size="lg"
                         >
-                            <CIcon className="mr-1" size="lg" icon={cilCart} />
-                            Agregar Al Carrito
+                            {
+                                loading
+                                ?
+                                <CSpinner size="sm" />
+                                :
+                                <>
+                                    <CIcon className="mr-1" size="lg" icon={cilCart} />
+                                    Agregar Al Carrito
+                                </>
+
+                            }
                         </CButton>
                     </CCol>
 

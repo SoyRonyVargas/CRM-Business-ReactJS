@@ -9,6 +9,7 @@ export type AuthState = {
   sidebarShow: boolean
   loadingForm: boolean
   loading: boolean
+  carrito: number
   logged: boolean
 }
 
@@ -20,6 +21,7 @@ const initialState: AuthState = {
   error: null,
   token: null,
   user: null,
+  carrito: 0
 }
 
 export const authSlice = createSlice({
@@ -58,13 +60,17 @@ export const authSlice = createSlice({
       state.logged = false
       state.token = null
       state.user = null
+    },
+    setTotalCarrito: ( state , { payload } : PayloadAction<number> ) => {
+      state.carrito = payload
     }
   },
 })
 
-export const { setCargandoLogin , setAuthError , setUsuario , setCargando , setUsuarioWithToken , setSideBarState , setAutenticated , setCerrarSesion } = authSlice.actions
+export const { setCargandoLogin , setAuthError , setUsuario , setCargando , setUsuarioWithToken , setSideBarState , setAutenticated , setCerrarSesion , setTotalCarrito } = authSlice.actions
 
 export const selectSideBarState = ( state : RootState ) => state.auth.sidebarShow
 export const selectCargandoLogin = ( state : RootState ) => state.auth.loadingForm
+export const selectTotalCarrito = ( state : RootState ) => state.auth.carrito
 
 export default authSlice

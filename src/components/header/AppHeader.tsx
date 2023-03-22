@@ -15,8 +15,7 @@ import {
   CNavLink,
   CNavItem,
 } from '@coreui/react'
-import useAuthStore from '../../hooks/useAuthStore'
-
+import Carrito from './Carrito'
 
 const AppHeader : React.FC = () => {
   
@@ -31,8 +30,11 @@ const AppHeader : React.FC = () => {
           className="ps-1"
           onClick={() => dispatch(setSideBarState(!sidebarShow))}
         >
+        
           <CIcon icon={cilMenu} size="lg" />
+        
         </CHeaderToggler>
+        
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             <CNavLink to="/dashboard" component={NavLink}>
@@ -48,7 +50,11 @@ const AppHeader : React.FC = () => {
         </CHeaderNav>
         
         <CHeaderNav className="ms-3">
+          
+          <Carrito  />
+
           <AppHeaderDropdown />
+
         </CHeaderNav>
 
       </CContainer>

@@ -1,14 +1,16 @@
-import { setAuthError, setUsuario , setCargando, setAutenticated, setCerrarSesion, selectCargandoLogin, setCargandoLogin } from '../redux/auth/authSlice'
+import { setAuthError, setUsuario , setCargando, setAutenticated, setCerrarSesion, selectCargandoLogin, setCargandoLogin, setTotalCarrito, selectTotalCarrito } from '../redux/auth/authSlice'
 import { AuthUser, AutenticatedUser, WrapperQuery, Usuario } from '../types'
 import { AUTH_LOGIN_USER , AUTH_OBTENER_USUARIO } from '../graphql/auth'
 import { useAppDispatch, useAppSelector } from './useStore'
 import { useLazyQuery, useMutation } from '@apollo/client'
+import { OBTENER_TOTAL_CARRITO } from '../graphql/carrito'
 import { useNavigate } from 'react-router-dom'
 
 const NAME_STORAGE = "token"
 
 const useAuthStore = () => {
     
+    const [ obtenerTotalCarrito ] = useLazyQuery<WrapperQuery<number>>(OBTENER_TOTAL_CARRITO);
     const [ nuevoUsuario ] = useMutation<WrapperQuery<AutenticatedUser>>(AUTH_LOGIN_USER);
     const [ obtenerUsuarioCB ] = useLazyQuery<WrapperQuery<Usuario>>(AUTH_OBTENER_USUARIO);
     
@@ -19,6 +21,7 @@ const useAuthStore = () => {
     const loadingFormLogin = useAppSelector(selectCargandoLogin)
     const isAutenticated = useAppSelector( store => store.auth.logged )
     const errorAuthLogin = useAppSelector( store => store.auth.error )
+    const totalItemsCarrito = useAppSelector(selectTotalCarrito)
 
     const handleCerrarSesion = () => {
 
@@ -84,7 +87,7 @@ const useAuthStore = () => {
             if( error ){
                 dispatch(setAuthError(error.message))
                 handleCerrarSesion()
-                return;''
+                return;
             }
             
             dispatch(setUsuario({
@@ -142,6 +145,14 @@ const useAuthStore = () => {
 
     }
 
+    const handleTotalCarrito = async () => {
+
+        const { data } = await obtenerTotalCarrito()
+
+        dispatch(setTotalCarrito(data.obtenerNavbarCarrito))
+
+    }
+
     const checkAuthOnInit = async () => {
 
         const token = handleObtenerToken()
@@ -150,6 +161,7 @@ const useAuthStore = () => {
         {
             dispatch(setAutenticated(true))
             await handleLoginWithToken()
+            await handleTotalCarrito()
         }
         else
         {
@@ -160,6 +172,7 @@ const useAuthStore = () => {
 
     return {
         handleCerrarSesion,
+        totalItemsCarrito,
         checkAuthOnInit,
         handleLogin,
         isAutenticated, 

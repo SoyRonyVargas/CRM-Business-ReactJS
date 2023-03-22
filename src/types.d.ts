@@ -87,7 +87,7 @@ export type CrearProducto = Pick<Producto, "descripcion" | "nombre" | "precio" |
   imagen?: string[]
 };
 
-export type QueryProductos ={
+export type QueryProductos = {
   nombre: string
   precio: number
   status: number
@@ -98,4 +98,19 @@ export type QueryProductos ={
 
 export type ValuesFicha = {
   cantidad: number
+}
+
+// CARRITO
+
+export type ConceptoCarrito = {
+  producto: Producto
+  cantidad: number
+  importe: number
+  usuario: Basic
+  total: number
+  id: string
+}
+
+export type Carrito = {
+  conceptos: ConceptoCarrito[]
 }

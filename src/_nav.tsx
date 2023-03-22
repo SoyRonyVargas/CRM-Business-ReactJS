@@ -22,7 +22,7 @@ const _nav: NavElement[] = [
   {
     primary: true,
     component: CNavTitle,
-    name: 'Components',
+    name: 'Articulos',
   },
   // {
   //   component: CNavGroup,
@@ -33,19 +33,20 @@ const _nav: NavElement[] = [
       
   //   ]
   // },
-  {
-    primary: true,
-    component: CNavItem,
-    name: 'Carrito',
-    to: '/carrito',
-    icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
-  },
+  
   {
     primary: true,
     component: CNavItem,
     name: 'Catalogo',
     to: '/productos',
     icon: <CIcon icon={cilBook} customClassName="nav-icon" />,
+  },
+  {
+    primary: true,
+    component: CNavItem,
+    name: 'Carrito',
+    to: '/carrito',
+    icon: <CIcon icon={cilCart} customClassName="nav-icon" />,
   },
   {
     primary: true,
