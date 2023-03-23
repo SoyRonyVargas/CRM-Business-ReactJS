@@ -48,6 +48,11 @@ export type Cliente = Basic & {
   rfc: string
 }
 
+export type ClienteSelect = {
+  label: string
+  value: string
+}
+
 export type CrearCliente = Pick<Cliente, "apellido" | "fecha_nacimiento" | "email" | "nombre" | "telefono"> & {
   empresa: string
   rfc: string
@@ -113,4 +118,14 @@ export type ConceptoCarrito = {
 
 export type Carrito = {
   conceptos: ConceptoCarrito[]
+}
+
+export type S = {
+  loading: boolean
+  conceptos: ConceptoCarrito[]
+  clientes: ClienteSelect[]
+}
+
+export type SearchCarrito = {
+  cliente: string
 }

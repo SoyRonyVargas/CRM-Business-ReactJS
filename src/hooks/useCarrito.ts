@@ -1,43 +1,50 @@
-import { OBTENER_CARRITO, REMOVER_CONCEPTO_CARRITO } from '../graphql/carrito';
-import { Carrito, WrapperQuery } from '../types';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { useState } from 'react';
-import Swal from 'sweetalert2';
-import { OBTENER_CLIENTES_VENDEDOR } from '../graphql/movimientos/clientes';
+import { OBTENER_CARRITO, REMOVER_CONCEPTO_CARRITO } from '../graphql/carrito'
+import { OBTENER_CLIENTES_VENDEDOR } from '../graphql/movimientos/clientes'
+import { Carrito, WrapperQuery , Cliente, S, SearchCarrito } from '../types'
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { updateDeleteConcepto } from '../cache/carrito'
+import { useState } from 'react'
+import Swal from 'sweetalert2'
 
-const useCarrito = () => {
+const DEFAULT_SEARCH : SearchCarrito = {
+    cliente: ""
+}
+
+const useCarrito = ( search : SearchCarrito = DEFAULT_SEARCH ) => {
   
-    const [ handleClientesVendedor ] = useLazyQuery<WrapperQuery<Carrito>>(OBTENER_CLIENTES_VENDEDOR);
-    const [ handleDeleteConcepto ] = useMutation<WrapperQuery<boolean>>(REMOVER_CONCEPTO_CARRITO);
-    const [ handleGetCarrito ] = useLazyQuery<WrapperQuery<Carrito>>(OBTENER_CARRITO);
-    const [ carrito , setConceptos ] = useState({
+    // APOLLO
+    const [ obtenerClientesVendedor , { data: data_clientes } ] = useLazyQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES_VENDEDOR, {
+        variables: {
+            input: {
+                nombre: search.cliente
+            }
+        },
+    });
+    
+    const [ handleDeleteConcepto ] = useMutation<WrapperQuery<boolean>>(REMOVER_CONCEPTO_CARRITO, {
+        update: updateDeleteConcepto
+    });
+
+    const [ handleGetCarrito , { data: conceptos , refetch } ] = useLazyQuery<WrapperQuery<Carrito>>(OBTENER_CARRITO);
+    const [ loading , setLoading ] = useState(false)
+    // STATE
+    const [ carrito , setCarrito ] = useState({
         loading: false,
-        conceptos: []
+        clientes: []
     })
 
     const handleObtenerCarrito = async () => {
-
-        setConceptos({
-            ...carrito,
-            loading: true
-        })
-
-        const { data } = await handleGetCarrito()
-
-        setConceptos({
-            ...carrito,
-            conceptos: data.obtenerCarrito.conceptos,
-            loading: false
-        })
+        
+        setLoading(true)
+        
+        await handleGetCarrito()
+        
+        await obtenerClientesVendedor()
+        
+        setLoading(false)
 
     }
 
-    const handleObtenerClientesVendedor = async () => {
-
-        const { data } = await handleObtenerClientesVendedor()
-
-    }
-    
     const handleRemoverConcepto = async ( id: string ) => {
 
         const { isConfirmed } = await Swal.fire({
@@ -49,27 +56,36 @@ const useCarrito = () => {
 
         if( !isConfirmed ) return
 
-        setConceptos({
-            ...carrito,
-            loading: true
-        })
-
-        const { data, errors } = await handleDeleteConcepto({
+        const { data , errors } = await handleDeleteConcepto({
             variables: {
                 input: id
             }
         })
-
+        
         if( errors ) {
             return
         }
+        
+        if( data.removerConceptoCarrito )
+        {
+            await handleObtenerCarrito()
+        }
 
-        await handleObtenerCarrito()
+    }
+
+    const mapClientes = ( data : Cliente[] ) => {
+
+        return data.map( cliente => ({
+            label: `${cliente.nombre} ${cliente.apellido} (${cliente.rfc})`,
+            value: cliente.id
+        }))
 
     }
 
     return {
-        ...carrito,
+        loading,
+        clientes: mapClientes(data_clientes?.obtenerClientesVendedor || []),
+        conceptos: conceptos?.obtenerCarrito?.conceptos || [],
         handleObtenerCarrito,
         handleRemoverConcepto
     }

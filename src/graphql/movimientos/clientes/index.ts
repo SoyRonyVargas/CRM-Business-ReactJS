@@ -9,24 +9,25 @@ export const OBTENER_CLIENTES = gql`
             creado
             email
             vendedor {
-            id
-            nombre
+                id
+                nombre
             }
         }
     }
 `
 
 export const OBTENER_CLIENTES_VENDEDOR = gql`
-    query {
-        obtenerClientesVendedor {
+    query obtenerClientesVendedor($input:QueryClientesVendedor){
+        obtenerClientesVendedor(input:$input) {
             id
             nombre
             apellido
             creado
             email
+            rfc
             vendedor {
-            id
-            nombre
+                id
+                nombre
             }
         }
     }

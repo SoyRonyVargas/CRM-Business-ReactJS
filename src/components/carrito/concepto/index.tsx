@@ -4,7 +4,8 @@ import useCarrito from '../../../hooks/useCarrito'
 import { ConceptoCarrito } from '../../../types'
 import { cilTrash } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-import React, { FC } from 'react'
+import { FC } from 'react'
+
 const Concepto : FC<ConceptoCarrito> = ( props ) => {
     
     const { handleRemoverConcepto } = useCarrito()
