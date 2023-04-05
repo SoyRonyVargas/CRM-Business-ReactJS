@@ -5,11 +5,13 @@ import { useMutation, useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
+import { IVA_GLOBAL } from '../default'
+import { parseCantidad } from '../utils/parseCantidad'
 
 const useFichaProducto = () => {
 
     const [ loading_create , setLoading ] = useState(false);
-
+    
     const { id } = useParams<"id">()
 
     const { loading , data : _producto } = useQuery<WrapperQuery<Producto>>(OBTENER_PRODUCTO , {
@@ -21,6 +23,12 @@ const useFichaProducto = () => {
     const [ handleAgregarConceptoCarrito ] = useMutation<WrapperQuery<any>>( AGREGAR_CONCEPTO_CARRITO )
 
     const producto = _producto?.obtenerProducto || null
+
+    const [ concepto , setConcepto ] = useState({
+        importe: 0,
+        total: 0,
+        iva: 0,
+    })
 
     const onSubmit = async ( values : ValuesFicha ) => {
 
@@ -34,8 +42,9 @@ const useFichaProducto = () => {
                     input: {
                         cantidad: values.cantidad,
                         producto: id,
-                        importe: 1,
-                        total: 1
+                        importe: concepto.importe,
+                        total: concepto.total,
+                        iva: concepto.iva
                     }
                 }
             })
@@ -74,9 +83,38 @@ const useFichaProducto = () => {
 
     }
 
+    const handleChangeCantidad = ( e : React.FormEvent<HTMLInputElement> ) => {
+
+        const cantidad : number = Number(e.currentTarget.value) || 0;
+
+        if( cantidad <= 0 )
+        {
+            return;
+        }
+
+        const importe = cantidad * producto.precio;
+
+        const iva = importe * IVA_GLOBAL;
+
+        const total = importe + iva;
+
+        setConcepto({
+            importe,
+            iva,
+            total
+        })
+
+    }
+
     return {
+        handleChangeCantidad,
         loading: loading_create || loading,
         loading_create: false,
+        concepto: {
+            importe: parseCantidad(concepto.importe),
+            total: parseCantidad(concepto.total),
+            iva: parseCantidad(concepto.iva)
+        },
         producto,
         onSubmit,
     }

@@ -15,6 +15,7 @@ import {
     CRow,
     CSpinner,
 } from "@coreui/react";
+import { parseCantidad } from "../../../utils/parseCantidad";
 
 
 const RightSide = () => {
@@ -23,7 +24,9 @@ const RightSide = () => {
     const {
         producto,
         onSubmit,
-        loading
+        loading,
+        concepto,
+        handleChangeCantidad
     } = useContext(FichaContext)
     
     const formik = useFormik<ValuesFicha>({
@@ -70,7 +73,10 @@ const RightSide = () => {
                         <CFormInput
                             // disabled={loading || producto?.existencias == 0}
                             className="rounded-0 outline-0"
-                            onChange={formik.handleChange}
+                            onChange={(e) => {
+                                formik.handleChange(e)
+                                handleChangeCantidad(e)
+                            }}
                             aria-label="lg input example"
                             placeholder="Cantidad..."
                             name="cantidad"
@@ -108,15 +114,19 @@ const RightSide = () => {
                     <CListGroup flush>
                         <CListGroupItem className="d-flex justify-content-between align-items-center">
                             <>Precio por pieza</>
-                            <strong>$40.00</strong>
+                            <strong>{parseCantidad(producto?.precio)}</strong>
                         </CListGroupItem>
                         <CListGroupItem className="d-flex justify-content-between align-items-center">
-                            <>Subtotal</>
-                            <strong>$80.00</strong>
+                            <>Importe</>
+                            <strong>{concepto.importe}</strong>
+                        </CListGroupItem>
+                        <CListGroupItem className="d-flex justify-content-between align-items-center">
+                            <>IVA</>
+                            <strong>{concepto.iva}</strong>
                         </CListGroupItem>
                         <CListGroupItem className="d-flex justify-content-between align-items-center">
                             <strong>Total</strong>
-                            <strong>$80.00</strong>
+                            <strong>{concepto.total}</strong>
                         </CListGroupItem>
                     </CListGroup>
                 </div>

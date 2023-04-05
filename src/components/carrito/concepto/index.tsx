@@ -5,12 +5,13 @@ import { ConceptoCarrito } from '../../../types'
 import { cilTrash } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { FC } from 'react'
+import { parseCantidad } from '../../../utils/parseCantidad'
 
 const Concepto : FC<ConceptoCarrito> = ( props ) => {
     
     const { handleRemoverConcepto } = useCarrito()
     
-    const { producto , cantidad , id } = props
+    const { producto , cantidad , id , importe , total , iva } = props
 
     const remove = () => {
         handleRemoverConcepto(id)
@@ -29,23 +30,33 @@ const Concepto : FC<ConceptoCarrito> = ( props ) => {
                     <CCol md={9}>
                         <CCardBody style={{ paddingTop: 0 }}>
                             <CCardTitle>
+                                {/* <pre>
+                                    {
+                                        JSON.stringify( producto , null , 3 )
+                                    }
+                                </pre> */}
                                 {
-                                    producto.nombre
+                                    producto?.nombre
                                 }
                             </CCardTitle>
                             <CCardText className='mb-2'>
                                 {
-                                    producto.descripcion
+                                    producto?.descripcion
                                 }
                             </CCardText>
                             <hr className='mb-2 mt-2' />
                             <CCardText className='mb-1'>
-                                Cantidad:
-                                <strong> { cantidad } </strong>
+                                <strong>Cantidad: { cantidad } </strong>
                             </CCardText>
-                            <CCardText className='mt-0'>
-                                Importe:
-                                <strong> ${ cantidad } </strong>
+                            <CCardText className='mb-1'>
+                                <strong> Importe: { parseCantidad(importe) } </strong>
+                            </CCardText>
+                            <CCardText className='mb-1'>
+                                
+                                <strong> IVA: { parseCantidad(iva) } </strong>
+                            </CCardText>
+                            <CCardText className='mt-0 mb-0'>
+                                <strong>Total: { parseCantidad(total) } </strong>
                             </CCardText>
                         </CCardBody>
                     </CCol>

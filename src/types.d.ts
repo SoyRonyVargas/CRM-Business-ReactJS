@@ -107,12 +107,22 @@ export type ValuesFicha = {
 
 // CARRITO
 
+export type ConceptoCarritoLight = {
+  producto: string
+  cantidad: number
+  importe: number
+  usuario?: string
+  total: number
+  id?: string
+}
+
 export type ConceptoCarrito = {
   producto: Producto
   cantidad: number
   importe: number
   usuario: Basic
   total: number
+  iva: number
   id: string
 }
 
@@ -120,12 +130,20 @@ export type Carrito = {
   conceptos: ConceptoCarrito[]
 }
 
-export type S = {
-  loading: boolean
+export type SearchCarrito = {
   conceptos: ConceptoCarrito[]
   clientes: ClienteSelect[]
+  nombre_cliente: string
+  loading: boolean
 }
 
-export type SearchCarrito = {
+export type CrearOrdenVenta = {
+  titulo_venta: string
   cliente: string
+  conceptos: ConceptoCarritoLight[]
+}
+export type StateCarrito = {
+  nombre_cliente: string
+  titulo_venta: string
+  seleccion: string
 }

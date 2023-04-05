@@ -26,6 +26,8 @@ export const OBTENER_CARRITO = gql`
                 id
                 cantidad
                 importe
+                total
+                iva
                 usuario {
                     id
                     nombre
@@ -45,5 +47,21 @@ export const REMOVER_CONCEPTO_CARRITO = gql`
     mutation removerConceptoCarrito( $input:ID! )
     {
         removerConceptoCarrito( input: $input )
+        {
+            id
+            producto
+            usuario
+        }
+    }
+`
+
+export const CREAR_ORDEN_VENTA = gql`
+    mutation crearOrdenVenta($input:CrearOrdenVenta){
+        crearOrdenVenta( input: $input){
+            id
+            conceptos 
+            vendedor 
+            cliente
+        }
     }
 `
