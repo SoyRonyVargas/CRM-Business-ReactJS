@@ -14,9 +14,9 @@ const EditClienteView = lazy(() => import('./views/movimientos/clientes/edit'))
 // PRODUCTOS
 
 const CreateProductosView = lazy(() => import('./views/movimientos/productos/create'))
-const EditProductosView = lazy(() => import('./views/movimientos/productos/edit'))
 const MainProductosView = lazy(() => import('./views/movimientos/productos'))
 const ProductoIDView = lazy(() => import('./views/productos/id'))
+const EditProductosView = lazy(() => import('./producto/editar'))
 
 // CARRITO
 
