@@ -17,20 +17,22 @@ import {
 const index = () => {
 
   const {
-    values,
     orden,
+    values,
     errors,
+    enviado,
     loading,
     clientes,
     buscador,
     conceptos,
     handleChange,
+    getFieldProps,
     handleGuardarOrdenVenta
   } = useCarrito();
 
   return (
     <CCard className="mb-3">
-      {/* <pre>
+      <pre>
         {
           JSON.stringify( values , null , 3 )
         }
@@ -40,16 +42,22 @@ const index = () => {
           JSON.stringify( clientes , null , 3 )
         }
       </pre>
+      errores
       <pre>
         {
           JSON.stringify( errors , null , 3 )
         }
-      </pre> */}
-       {/* <pre>
+      </pre>
+       <pre>
+        {
+          JSON.stringify( enviado , null , 3 )
+        }
+      </pre> 
+       <pre>
         {
           JSON.stringify( errors , null , 3 )
         }
-      </pre>  */}
+      </pre> 
       <CCardBody>
         <form onSubmit={handleGuardarOrdenVenta}>
           <h4>Carrito</h4>
@@ -72,9 +80,7 @@ const index = () => {
                   className="d-flex justify-content-center align-items-end"
                 >
                   <CButton
-                    // type="submit"
                     color="primary"
-                  // shape="rounded-0"
                     onClick={buscador.cliente.handleBuscarClientes}
                   >
                     Buscar
@@ -85,10 +91,9 @@ const index = () => {
                     Clientes
                   </label>
                   <select
-                    className="form-select"
+                    className={`form-select ${errors.seleccion ? 'is-invalid': ''}`}
                     onChange={handleChange}
                     name="seleccion"
-                  // value={clientes.find( x => x.value == values?.seleccion )?.label}
                   >
                     {
                       clientes.map(cliente => (
@@ -106,8 +111,10 @@ const index = () => {
               <CRow>
                 <CCol>
                   <CFormInput
-                    value={values.titulo_venta}
+                    feedbackInvalid={errors.titulo_venta ? `${errors.titulo_venta}` : null}
+                    className={`${errors.titulo_venta ? "is-invalid" : ""}`}
                     label="Nombre de la venta"
+                    {...getFieldProps("titulo_venta")}
                     onChange={handleChange}
                     name="titulo_venta"
                     type="text"

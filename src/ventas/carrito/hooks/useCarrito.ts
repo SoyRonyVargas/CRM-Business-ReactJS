@@ -5,7 +5,7 @@ import { updateDeleteConcepto } from '../../../cache/carrito'
 import { parseCantidad } from '../../../utils/parseCantidad'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { createOrdenVentaSchema } from '../validations'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useFormik } from 'formik'
 import Swal from 'sweetalert2'
@@ -80,8 +80,15 @@ const useCarrito = () => {
     }
 
     const { 
+        resetForm,
+        getFieldProps,
+        isValidating,
+        setValues,
+        // setSubmitting,
+        // setErrors,
         setFieldValue, 
-        setFieldError,
+        // setFieldError,
+        // setFieldTouched,
         handleChange, 
         handleSubmit,
         values,
@@ -93,7 +100,7 @@ const useCarrito = () => {
           nombre_cliente: ""
         },
         onSubmit: handleGuardarOrdenVenta,
-        validationSchema: createOrdenVentaSchema
+        validationSchema: createOrdenVentaSchema,
     });
 
     // APOLLO
@@ -119,9 +126,19 @@ const useCarrito = () => {
 
     useEffect( () => {
 
-        handleBuscarClientes();
+        handleBuscarClientes()
+        // .then( () => {
+        //     setSubmitting(false)
+        //     setErrors({
+        //         titulo_venta: null
+        //     })
+        //     setFieldError('titulo_venta' , null)
+        //     setFieldTouched("titulo_venta" , false)
+        // });
 
-        handleObtenerCarrito();
+        // handleObtenerCarrito();
+
+        
 
     }, [])
 
@@ -129,8 +146,6 @@ const useCarrito = () => {
 
         try
         {
-
-            debugger
 
             const { data } = await obtenerClientesVendedor({
                 variables: {
@@ -140,27 +155,43 @@ const useCarrito = () => {
                 }
             })
 
-            debugger
-
             const clientes : Cliente[] = data?.obtenerClientesVendedor || [];
 
             const primer_cliente : Cliente = clientes[0]
 
             if( clientes.length > 0 )
             {
-                setFieldValue( "seleccion" , primer_cliente.id )
-
-                values
-                
-                debugger
+                setFieldValue( "seleccion" , primer_cliente.id , false)
+                // setValues({
+                //     ...values,
+                //     seleccion: primer_cliente.id
+                // })
             }
             else
             {
-                setFieldValue( "seleccion" , "" )
+                setFieldValue( "seleccion" , "" , false)
+                // setValues({
+                //     ...values,
+                //     seleccion: ""
+                // })
+                // setFieldValue( "seleccion" , "" )
             }
             
-            
             setClientes(clientes)
+
+            // setErrors({
+            //     titulo_venta: null
+            // })
+
+            // setFieldTouched("titulo_venta" , false)
+
+            // setFieldError('titulo_venta' , null)
+
+            // resetForm()
+
+            errors
+
+            debugger
 
         }
         catch(err)
@@ -216,8 +247,6 @@ const useCarrito = () => {
         
         await handleGetCarrito()
         
-        await obtenerClientesVendedor()
-
         setLoading(false)
 
     }
@@ -264,6 +293,7 @@ const useCarrito = () => {
         values,
         loading,
         conceptos,
+        enviado: isValidating,
         handleChange,
         orden: {
             importe: calcularImporteOrden(),
@@ -275,6 +305,7 @@ const useCarrito = () => {
                 handleBuscarClientes
             }
         },
+        getFieldProps,
         clientes: mapClientes(clientes),
         handleObtenerCarrito,
         handleRemoverConcepto,
