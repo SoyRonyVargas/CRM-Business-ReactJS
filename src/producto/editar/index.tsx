@@ -1,7 +1,7 @@
 import { FormEditContext } from "./context/FormEditContext";
 import RightForm from './components/RightForm';
 import LeftForm from './components/LeftForm'
-import { CCol, CRow, } from "@coreui/react";
+import { CCard, CCardBody, CCol, CRow, } from "@coreui/react";
 import useForm from "./hooks/useForm";
 
 const EditProductoView = () => {
@@ -10,14 +10,18 @@ const EditProductoView = () => {
 
     return (
         <FormEditContext.Provider value={form}>
-            <CRow>
-                <CCol xs={8}>
-                    <LeftForm/>
-                </CCol>
-                <CCol xs={4}>
-                    <RightForm />
-                </CCol>
-            </CRow>
+            <CCard>
+                <CCardBody>
+                    <CRow>
+                        <CCol xs={8}>
+                            <LeftForm/>
+                        </CCol>
+                        <CCol xs={4}>
+                            <RightForm />
+                        </CCol>
+                    </CRow>
+                </CCardBody>
+            </CCard>
         </FormEditContext.Provider>
     );
 };

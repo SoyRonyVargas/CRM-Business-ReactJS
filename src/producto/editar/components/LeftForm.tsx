@@ -26,8 +26,8 @@ const LeftForm = () => {
     } = useContext(FormEditContext)
 
     return (
-        <form onSubmit={handleSubmit}>
-            <CCard>
+        <form className="h-100" onSubmit={handleSubmit}>
+            <CCard className="h-100">
                 <CCardHeader>
                     <strong>Producto Nuevo</strong>
                 </CCardHeader>

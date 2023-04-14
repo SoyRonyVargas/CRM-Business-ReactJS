@@ -16,9 +16,10 @@ const ImageCarousel: FC<Props> = ({ imagen }) => {
     } = useContext(FormEditContext)
 
     return (
-        <ContainerRemoveImage onClick={ () => handleRemoveImagen(imagen) }>
+        <ContainerRemoveImage>
             
             <CIcon 
+                onClick={ () => handleRemoveImagen(imagen) }
                 className='button__remove'
                 icon={cilTrash} 
                 size="xl"

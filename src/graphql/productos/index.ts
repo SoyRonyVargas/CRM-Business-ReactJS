@@ -41,6 +41,17 @@ export const CREAR_PRODUCTO = gql`
     }
 `
 
+export const ACTUALIZAR_PRODUCTO = gql`
+   mutation actualizarProducto( $input:ActualizarProducto )
+    {
+        actualizarProducto( input: $input ){
+            id
+            nombre
+            existencias
+        }
+    }
+`
+
 export const QUERY_PRODUCTOS = gql`
     query obtenerProductos($input: QueryProductos!) {
         obtenerProductos(input:$input){

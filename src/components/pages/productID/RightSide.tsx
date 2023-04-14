@@ -1,3 +1,4 @@
+import { parseCantidad } from "../../../utils/parseCantidad";
 import { FichaContext } from "../../../views/productos/id";
 import useUtils from "../../../hooks/useUtils";
 import { ValuesFicha } from "../../../types";
@@ -15,7 +16,6 @@ import {
     CRow,
     CSpinner,
 } from "@coreui/react";
-import { parseCantidad } from "../../../utils/parseCantidad";
 
 
 const RightSide = () => {
@@ -109,27 +109,32 @@ const RightSide = () => {
                     </CCol>
 
                 <hr className="mt-4" />
-
-                <div>
-                    <CListGroup flush>
-                        <CListGroupItem className="d-flex justify-content-between align-items-center">
-                            <>Precio por pieza</>
-                            <strong>{parseCantidad(producto?.precio)}</strong>
-                        </CListGroupItem>
-                        <CListGroupItem className="d-flex justify-content-between align-items-center">
-                            <>Importe</>
-                            <strong>{concepto.importe}</strong>
-                        </CListGroupItem>
-                        <CListGroupItem className="d-flex justify-content-between align-items-center">
-                            <>IVA</>
-                            <strong>{concepto.iva}</strong>
-                        </CListGroupItem>
-                        <CListGroupItem className="d-flex justify-content-between align-items-center">
-                            <strong>Total</strong>
-                            <strong>{concepto.total}</strong>
-                        </CListGroupItem>
-                    </CListGroup>
-                </div>
+                
+                {
+                    formik.values.cantidad > 0
+                    &&
+                    <div>
+                        <CListGroup flush>
+                            <CListGroupItem className="d-flex justify-content-between align-items-center">
+                                <>Precio por pieza</>
+                                <strong>{parseCantidad(producto?.precio)}</strong>
+                            </CListGroupItem>
+                            <CListGroupItem className="d-flex justify-content-between align-items-center">
+                                <>Importe</>
+                                <strong>{concepto.importe}</strong>
+                            </CListGroupItem>
+                            <CListGroupItem className="d-flex justify-content-between align-items-center">
+                                <>IVA</>
+                                <strong>{concepto.iva}</strong>
+                            </CListGroupItem>
+                            <CListGroupItem className="d-flex justify-content-between align-items-center">
+                                <strong>Total</strong>
+                                <strong>{concepto.total}</strong>
+                            </CListGroupItem>
+                        </CListGroup>
+                    </div>
+                }
+                
             </CRow>
             </form>
         </div>

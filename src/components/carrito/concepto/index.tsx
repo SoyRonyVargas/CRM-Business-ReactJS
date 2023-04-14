@@ -1,6 +1,6 @@
 import { CButtonGroup, CCardBody, CCardImage, CCardText, CCardTitle, CCol, CRow } from '@coreui/react'
 import { CardBottomConcepto, CardButtonConcepto, CardContainerConcepto, ContainerConcepto } from './styled'
-import useCarrito from '../../../hooks/useCarrito'
+import useCarrito from '../../../ventas/carrito/hooks/useCarrito'
 import { ConceptoCarrito } from '../../../types'
 import { cilTrash } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'

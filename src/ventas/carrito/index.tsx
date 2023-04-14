@@ -1,6 +1,6 @@
+import LoaderConceptoCarrito from "../../components/carrito/concepto/Loader";
 import Concepto from "../../components/carrito/concepto";
-import useCarrito from "../../ventas/carrito/hooks/useCarrito";
-import React, { useEffect } from "react";
+import useCarrito from "./hooks/useCarrito";
 import CIcon from "@coreui/icons-react";
 import { cilSave } from "@coreui/icons";
 import {
@@ -9,33 +9,24 @@ import {
   CFormInput,
   CCardBody,
   CButton,
-  CForm,
   CCard,
   CCol,
   CRow
 } from "@coreui/react";
-import LoaderConceptoCarrito from "../../components/carrito/concepto/Loader";
 
-const CarritoView = () => {
-
+const index = () => {
 
   const {
     values,
     orden,
+    errors,
     loading,
-    conceptos,
     clientes,
     buscador,
+    conceptos,
     handleChange,
-    handleObtenerCarrito,
     handleGuardarOrdenVenta
   } = useCarrito();
-
-  useEffect(() => {
-
-    handleObtenerCarrito();
-
-  }, []);
 
   return (
     <CCard className="mb-3">
@@ -48,10 +39,15 @@ const CarritoView = () => {
         {
           JSON.stringify( clientes , null , 3 )
         }
-      </pre> */}
-      {/* <pre>
+      </pre>
+      <pre>
         {
-          JSON.stringify( conceptos , null , 3 )
+          JSON.stringify( errors , null , 3 )
+        }
+      </pre> */}
+       {/* <pre>
+        {
+          JSON.stringify( errors , null , 3 )
         }
       </pre>  */}
       <CCardBody>
@@ -79,7 +75,7 @@ const CarritoView = () => {
                     // type="submit"
                     color="primary"
                   // shape="rounded-0"
-                  // onClick={buscador.cliente.handleBuscarClientes}
+                    onClick={buscador.cliente.handleBuscarClientes}
                   >
                     Buscar
                   </CButton>
@@ -177,4 +173,4 @@ const CarritoView = () => {
   );
 };
 
-export default CarritoView;
+export default index;

@@ -2,13 +2,13 @@ import { Producto, ProductoLight, WrapperQuery } from '../../../types'
 import { OBTENER_PRODUCTO } from '../../../graphql/productos'
 import { useMutation, useQuery } from '@apollo/client'
 import { actualizarProductoCache } from '../cache'
+import axiosInstance from '../../../config/axios'
 import { ACTUALIZAR_PRODUCTO } from '../graphql'
 import { useParams } from 'react-router-dom'
 import { HEditProducto } from '../types'
 import { toast } from 'react-toastify'
 import { useFormik } from 'formik'
 import { useState } from 'react'
-import axiosInstance from '../../../config/axios'
 
 const useForm = () : HEditProducto => {
 
@@ -74,9 +74,7 @@ const useForm = () : HEditProducto => {
             
             setLoading(false)
 
-            // navigate("/movimientos/productos")
-
-            toast.success("Producto creado correctamente", {
+            toast.success("Producto actualizado correctamente", {
                 position: toast.POSITION.BOTTOM_CENTER
             });
 

@@ -2,11 +2,11 @@ import { Producto, ValuesFicha, WrapperQuery } from '../types'
 import { AGREGAR_CONCEPTO_CARRITO } from '../graphql/carrito'
 import { OBTENER_PRODUCTO } from '../graphql/productos'
 import { useMutation, useQuery } from '@apollo/client'
+import { parseCantidad } from '../utils/parseCantidad'
 import { useParams } from 'react-router-dom'
+import { IVA_GLOBAL } from '../default'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
-import { IVA_GLOBAL } from '../default'
-import { parseCantidad } from '../utils/parseCantidad'
 
 const useFichaProducto = () => {
 

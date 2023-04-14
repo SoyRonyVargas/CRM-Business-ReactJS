@@ -1,5 +1,5 @@
 import { CBadge, CButton, CCard, CCardBody, CCardHeader, CSpinner, CTable, CTableBody, CTableHead, CTableHeaderCell, CTableRow } from '@coreui/react'
-import { OBTENER_CLIENTES } from '../../../graphql/movimientos/clientes'
+import { OBTENER_CLIENTES_VENDEDOR } from '../../../graphql/movimientos/clientes'
 import useClientesStore from '../../../hooks/useClientesStore'
 import { cilPencil, cilPlus, cilTrash } from '@coreui/icons'
 import { Cliente, WrapperQuery } from '../../../types'
@@ -14,7 +14,14 @@ const MainClientesView = () => {
 
   const { handleRenderDate } = useUtils()
 
-  const { data } = useQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES)
+  const { data } = useQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES_VENDEDOR, {
+    fetchPolicy: 'no-cache',
+    variables: {
+      input: {
+        nombre: ""
+      }
+    }
+  })
 
   return (
     <div>

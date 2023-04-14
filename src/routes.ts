@@ -19,8 +19,7 @@ const ProductoIDView = lazy(() => import('./views/productos/id'))
 const EditProductosView = lazy(() => import('./producto/editar'))
 
 // CARRITO
-
-const CarritoView = lazy(() => import('./views/carrito'))
+const CarritoView = lazy(() => import('./ventas/carrito'))
 
 const routes = [
   { path: '/', name: 'Inicio' },

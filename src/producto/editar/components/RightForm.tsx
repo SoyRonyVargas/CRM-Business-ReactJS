@@ -1,5 +1,6 @@
 import { FormEditContext } from "../context/FormEditContext";
 import { cilCloudUpload } from "@coreui/icons";
+import ImageCarousel from "./ImageCarousel";
 import React, { useContext } from 'react';
 import CIcon from "@coreui/icons-react";
 import Dropzone from "react-dropzone";
@@ -9,11 +10,9 @@ import {
     CCardBody,
     CCarousel,
     CAvatar,
-    CImage,
     CAlert,
     CCard
 } from "@coreui/react";
-import ImageCarousel from "./ImageCarousel";
 
 const RightForm = () => {
     
@@ -30,6 +29,11 @@ const RightForm = () => {
                 <strong>Imagenes</strong>
             </CCardHeader>
             <CCardBody>
+                {/* <pre>
+                    {
+                        JSON.stringify( values , null , 3 )
+                    }
+                </pre> */}
                 <Dropzone accept={{
                     'image': ["*"]
                 }} onDrop={handleDrop}>
@@ -75,7 +79,7 @@ const RightForm = () => {
                 </Dropzone>
                 {
                     values?.imagen.length > 0 &&
-                    <CCarousel className="mt-3" controls>
+                    <CCarousel className="mt-3" controls={values?.imagen.length > 1}>
                         {
                             values?.imagen.map(imagen => (
                                 <CCarouselItem>

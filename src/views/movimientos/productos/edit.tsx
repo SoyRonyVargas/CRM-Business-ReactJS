@@ -1,8 +1,8 @@
-import { createProductoSchema } from "../../../validations/movimientos/productos";
-import { CrearProducto, Producto, WrapperQuery } from "../../../types";
+import { actualizarProductoSchema, createProductoSchema } from "../../../validations/movimientos/productos";
 import useProductoStore from "../../../hooks/useProductoStore";
 import { OBTENER_PRODUCTO } from "../../../graphql/productos";
 import { Field, Form, Formik, FormikProps } from "formik";
+import { Producto, WrapperQuery } from "../../../types";
 import { cilCloudUpload, cilSave } from "@coreui/icons";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -36,8 +36,9 @@ const EditProductoView = () => {
         }
     })
 
-    const { loading, handleCreateProducto } = useProductoStore()
-    const [preview, setPreview] = useState([])
+    const { loading, handleActualizarProducto } = useProductoStore()
+    
+    const [ preview, setPreview ] = useState([])
     
     // const initialValues: CrearProducto = {
     //     descripcion: "",
@@ -48,12 +49,14 @@ const EditProductoView = () => {
     // };
 
     return (
-        <CRow>
+        <CCard>
+            <CCardBody>
+            <CRow>
             <Formik
+                onSubmit={(producto) => handleActualizarProducto(producto , preview)}
+                validationSchema={actualizarProductoSchema}
                 initialValues={producto?.obtenerProducto}
-                validationSchema={createProductoSchema}
                 enableReinitialize={true}
-                onSubmit={() => {}}
             >
                 
                 {
@@ -95,7 +98,7 @@ const EditProductoView = () => {
                                                         label="Descripción"
                                                         name="descripcion"
                                                         style={{
-                                                            minHeight: "100px",
+                                                            minHeight: "200px",
                                                         }}
                                                     />
 
@@ -108,6 +111,18 @@ const EditProductoView = () => {
                                                         disabled={loading}
                                                         label="Precio"
                                                         name="precio"
+                                                        type="number"
+                                                    />
+                                                    
+                                                    <CFormInput
+                                                        feedbackInvalid={props.errors.existencias ? `${props.errors.existencias}` : null}
+                                                        className={`${props.errors.existencias ? "is-invalid" : ""} mb-2`}
+                                                        placeholder="Existencias del producto..."
+                                                        {...props.getFieldProps("existencias")}
+                                                        autoComplete={"none"}
+                                                        disabled={loading}
+                                                        label="Existencias"
+                                                        name="existencias"
                                                         type="number"
                                                     />
 
@@ -138,7 +153,7 @@ const EditProductoView = () => {
                                                     {!loading ? (
                                                         <>
                                                             <CIcon icon={cilSave} className="mr-1" />
-                                                            Guardar Producto
+                                                            Actualizar Producto
                                                         </>
                                                     ) : (
                                                         <>
@@ -164,7 +179,7 @@ const EditProductoView = () => {
 
                                             if (acceptedFiles.length == 0) return
 
-                                            props.setFieldValue("imagen", props.values.imagen.concat(acceptedFiles))
+                                            // props.setFieldValue("imagen", props.values.imagen.concat(acceptedFiles))
 
                                             const files = acceptedFiles.map(file => Object.assign(file, {
                                                 preview: URL.createObjectURL(file)
@@ -221,14 +236,14 @@ const EditProductoView = () => {
                                         </Dropzone>
 
                                         {
-                                            props.values?.imagen.length > 0 &&
+                                            preview.length > 0 &&
                                             <CCarousel className="mt-3" controls>
                                                 {
-                                                    props.values?.imagen.map(imagen => (
+                                                    preview.map(imagen => (
                                                         <CCarouselItem>
                                                             <CImage
                                                                 className="d-block w-100"
-                                                                src={imagen}
+                                                                src={imagen.preview}
                                                                 alt="slide 1"
                                                             />
                                                         </CCarouselItem>
@@ -245,6 +260,8 @@ const EditProductoView = () => {
                 }
             </Formik>
         </CRow>
+            </CCardBody>
+        </CCard>
     );
 };
 
