@@ -137,11 +137,46 @@ export type SearchCarrito = {
   loading: boolean
 }
 
+// ORDEN VENTA
+
 export type CrearOrdenVenta = {
   titulo_venta: string
   cliente: string
   conceptos: ConceptoCarritoLight[]
 }
+
+export type OrdenVentaConcepto = {
+  producto: Producto
+  cantidad: number
+  importe: number
+  creado: string
+  status: number
+  total: number
+  iva: number
+  id: string
+}
+
+export type OrdenVentaFull = {
+  conceptos: OrdenVentaConcepto[]
+  fecha_entrega: string
+  titulo_venta: string
+  vendedor: Basic
+  cliente: Basic
+  creado: string
+  id: string
+}
+
+export type OrdenVentaListado = {
+  total_productos: number
+  titulo_venta: string
+  importe: number
+  creado: string
+  cliente: Basic
+  total: number
+  iva: number
+  id: string
+}
+
 export type StateCarrito = {
   nombre_cliente: string
   titulo_venta: string

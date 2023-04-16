@@ -18,6 +18,10 @@ const MainProductosView = lazy(() => import('./views/movimientos/productos'))
 const ProductoIDView = lazy(() => import('./views/productos/id'))
 const EditProductosView = lazy(() => import('./producto/editar'))
 
+// ORDENES VENTA
+const ListadoOrdenVentaView = lazy(() => import('./ventas/listado'))
+const EditOrdenVentaView = lazy(() => import('./ventas/edit'))
+
 // CARRITO
 const CarritoView = lazy(() => import('./ventas/carrito'))
 
@@ -34,6 +38,8 @@ const routes = [
   { path: '/movimientos/productos', name: 'Productos', element: MainProductosView },
   { path: '/movimientos/productos/nuevo', name: 'Nuevo Producto', element: CreateProductosView },
   { path: '/movimientos/productos/edit/:id', name: 'Editar Producto', element: EditProductosView },
+  { path: '/movimientos/ventas/edit/:id', name: 'Orden Venta', element: EditOrdenVentaView },
+  { path: '/movimientos/ventas', name: 'Ordenes de venta', element: ListadoOrdenVentaView },
 ]
 
 export default routes

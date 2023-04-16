@@ -1,27 +1,29 @@
-import { Carrito, WrapperQuery , Cliente, ConceptoCarritoLight, StateCarrito, CrearOrdenVenta } from '../../../types'
+import { Carrito, WrapperQuery , Cliente, ConceptoCarritoLight, StateCarrito, CrearOrdenVenta, ConceptoCarrito } from '../../../types'
 import { CREAR_ORDEN_VENTA, OBTENER_CARRITO, REMOVER_CONCEPTO_CARRITO } from '../../../graphql/carrito'
 import { OBTENER_CLIENTES_VENDEDOR } from '../../../graphql/movimientos/clientes'
-import { updateDeleteConcepto } from '../../../cache/carrito'
 import { parseCantidad } from '../../../utils/parseCantidad'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { createOrdenVentaSchema } from '../validations'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useFormik } from 'formik'
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
 
 const useCarrito = () => {
 
+    const navigate = useNavigate()
+
     const [ loading , setLoading ] = useState(false)
 
-    const [ handleCrearOrdenVenta ] = useMutation<WrapperQuery<ConceptoCarritoLight>>( CREAR_ORDEN_VENTA );
+    const [ handleCrearOrdenVenta ] = useMutation<WrapperQuery<string>>( CREAR_ORDEN_VENTA );
 
     const handleGuardarOrdenVenta = async ( values: StateCarrito ) => {
 
         try
         {
 
-            if( conceptos.length == 0 ) 
+            if( carrito.length == 0 ) 
             {
                 
                 Swal.fire({
@@ -35,7 +37,7 @@ const useCarrito = () => {
 
             setLoading(true)
 
-            const _conceptos : ConceptoCarritoLight[] = conceptos.map( ({ usuario, id, ...concepto }) => ({
+            const _conceptos : ConceptoCarritoLight[] = carrito.map( ({ usuario, id, ...concepto }) => ({
                 ...concepto,
                 producto: concepto.producto.id,
                 concepto_carrito: id
@@ -47,7 +49,7 @@ const useCarrito = () => {
                 conceptos: _conceptos
             }
 
-            const { errors } = await handleCrearOrdenVenta({
+            const { errors , data } = await handleCrearOrdenVenta({
                 variables: {
                     input: orden
                 }
@@ -59,11 +61,21 @@ const useCarrito = () => {
                 });
             }
 
+            const id : string = data?.crearOrdenVenta;
+
+            debugger
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
             toast.success("Orden creada correctamente", {
                 position: toast.POSITION.BOTTOM_CENTER
             });
 
             setLoading(false)
+
+            const ruta = `/movimientos/ventas/edit/${id}`
+
+            navigate(ruta)
 
         }
         catch(err)
@@ -74,21 +86,14 @@ const useCarrito = () => {
             });
 
             setLoading(false)
-            debugger
         }
 
     }
 
     const { 
-        resetForm,
         getFieldProps,
         isValidating,
-        setValues,
-        // setSubmitting,
-        // setErrors,
         setFieldValue, 
-        // setFieldError,
-        // setFieldTouched,
         handleChange, 
         handleSubmit,
         values,
@@ -105,7 +110,7 @@ const useCarrito = () => {
 
     // APOLLO
     const [ obtenerClientesVendedor ] = useLazyQuery<WrapperQuery<Cliente[]>>(OBTENER_CLIENTES_VENDEDOR, {
-        fetchPolicy: "no-cache",
+        fetchPolicy: 'network-only',
         variables: {
             input: {
                 nombre: ""
@@ -116,29 +121,20 @@ const useCarrito = () => {
     const [ clientes , setClientes ] = useState<Cliente[]>([]);
     
     const [ handleDeleteConcepto ] = useMutation<WrapperQuery<ConceptoCarritoLight>>(REMOVER_CONCEPTO_CARRITO, {
-        update: updateDeleteConcepto
+        fetchPolicy: 'network-only',
     });
 
-    const [ handleGetCarrito , { data: _conceptos , refetch } ] = useLazyQuery<WrapperQuery<Carrito>>(OBTENER_CARRITO , {
-        fetchPolicy: "no-cache",
+    const [ handleGetCarrito ] = useLazyQuery<WrapperQuery<Carrito>>(OBTENER_CARRITO , {
+        fetchPolicy: 'network-only',
     });
-    const conceptos = _conceptos?.obtenerCarrito?.conceptos || []
 
+    const [ carrito , setCarrito ] = useState<ConceptoCarrito[]>([])
+    
     useEffect( () => {
 
         handleBuscarClientes()
-        // .then( () => {
-        //     setSubmitting(false)
-        //     setErrors({
-        //         titulo_venta: null
-        //     })
-        //     setFieldError('titulo_venta' , null)
-        //     setFieldTouched("titulo_venta" , false)
-        // });
-
-        // handleObtenerCarrito();
-
-        
+     
+        handleObtenerCarrito();
 
     }, [])
 
@@ -162,42 +158,17 @@ const useCarrito = () => {
             if( clientes.length > 0 )
             {
                 setFieldValue( "seleccion" , primer_cliente.id , false)
-                // setValues({
-                //     ...values,
-                //     seleccion: primer_cliente.id
-                // })
             }
             else
             {
                 setFieldValue( "seleccion" , "" , false)
-                // setValues({
-                //     ...values,
-                //     seleccion: ""
-                // })
-                // setFieldValue( "seleccion" , "" )
             }
             
             setClientes(clientes)
 
-            // setErrors({
-            //     titulo_venta: null
-            // })
-
-            // setFieldTouched("titulo_venta" , false)
-
-            // setFieldError('titulo_venta' , null)
-
-            // resetForm()
-
-            errors
-
-            debugger
-
         }
         catch(err)
         {
-            alert("")
-            debugger
         }
 
     }
@@ -206,7 +177,7 @@ const useCarrito = () => {
 
         let importe = 0;
 
-        for( let concepto of conceptos )
+        for( let concepto of carrito )
         {
             importe += concepto.importe;
         }
@@ -219,7 +190,7 @@ const useCarrito = () => {
 
         let iva = 0;
 
-        for( let concepto of conceptos )
+        for( let concepto of carrito )
         {
             iva += concepto.iva;
         }
@@ -232,7 +203,7 @@ const useCarrito = () => {
 
         let total = 0;
 
-        for( let concepto of conceptos )
+        for( let concepto of carrito )
         {
             total += concepto.total;
         }
@@ -241,40 +212,62 @@ const useCarrito = () => {
 
     }
 
+    const importe = useMemo(() => calcularImporteOrden, [carrito]);
+    const total = useMemo(() => calcularTotalOrden, [carrito]);
+    const iva = useMemo(() => calcularIVAOrden, [carrito]);
+
     const handleObtenerCarrito = async () => {
         
         setLoading(true)
         
-        await handleGetCarrito()
+        const { data, error } = await handleGetCarrito()
         
+        if( error )
+        {
+            return;
+        }
+
+        const conceptos = data.obtenerCarrito.conceptos
+
+        setCarrito(conceptos)
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         setLoading(false)
 
     }
 
     const handleRemoverConcepto = async ( id: string ) => {
 
-        const { isConfirmed } = await Swal.fire({
-            title: '¿Quieres eliminar el concepto del carrito?',
-            showCancelButton: true,
-            confirmButtonText: 'Eliminar',
-            cancelButtonText: `Cancelar`,
-        })
-
-        if( !isConfirmed ) return
-
-        const { data , errors } = await handleDeleteConcepto({
-            variables: {
-                input: id
-            }
-        })
-        
-        if( errors ) {
-            return
-        }
-        
-        if( data.removerConceptoCarrito )
+        try
         {
-            await handleObtenerCarrito()
+            const { isConfirmed } = await Swal.fire({
+                title: '¿Quieres eliminar el concepto del carrito?',
+                showCancelButton: true,
+                confirmButtonText: 'Eliminar',
+                cancelButtonText: `Cancelar`,
+            })
+    
+            if( !isConfirmed ) return
+    
+            const { errors } = await handleDeleteConcepto({
+                variables: {
+                    input: id
+                }
+            })
+            
+            if( errors ) {
+                return
+            }
+    
+            const conceptos_nuevos = carrito.filter( concepto => concepto.id !== id )
+            
+            setCarrito(conceptos_nuevos);
+            
+        }
+        catch
+        {
+            alert("error")
         }
 
     }
@@ -292,13 +285,14 @@ const useCarrito = () => {
         errors,
         values,
         loading,
-        conceptos,
+        conceptos: [...carrito],
+        carrito,
         enviado: isValidating,
         handleChange,
         orden: {
-            importe: calcularImporteOrden(),
-            iva: calcularIVAOrden(),
-            total: calcularTotalOrden()
+            importe: importe(),
+            total: total(),
+            iva: iva(),
         },
         buscador: {
             cliente: {
@@ -310,8 +304,12 @@ const useCarrito = () => {
         handleObtenerCarrito,
         handleRemoverConcepto,
         handleGuardarOrdenVenta: handleSubmit
-    }
+    };
   
+}
+
+export type HCarrito = {
+    
 }
 
 export default useCarrito

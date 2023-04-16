@@ -16,11 +16,11 @@ const CatalogoView = () => {
   
   return (
     <>
-    <pre>
+    {/* <pre>
       {
         JSON.stringify( values , null , 3 )
       }
-    </pre>
+    </pre> */}
       <CCard className="mb-3">
         <CCardBody>
             <CForm onSubmit={handleSubmit}>

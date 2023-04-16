@@ -12,28 +12,7 @@ const useClientesStore = () => {
     const [ loadingDelete , setLoadingDelete ] = useState(false)
     const [ loadingEdit , setLoadingEdit ] = useState(false)
     
-    const [ crearCliente ] = useMutation<ClienteLight>(CREAR_CLIENTE , {
-        update: ( cache : ApolloCache<any> , { data }) => {
-            
-            const { obtenerClientesVendedor } : WrapperQuery<Cliente[]> = cache.readQuery({ query: OBTENER_CLIENTES })
-
-            let clientes = [
-                ...obtenerClientesVendedor,
-                data
-            ]
-
-            cache.writeQuery({
-                query: OBTENER_CLIENTES,
-                data: {
-                    clientes: clientes,
-                    obtenerClientesVendedor: clientes
-                }
-            })
-
-            return clientes
-
-        }
-    })
+    const [ crearCliente ] = useMutation<ClienteLight>(CREAR_CLIENTE)
     
     const [ eliminarUsuario ] = useMutation<WrapperQuery<string>>(ELIMINAR_CLIENTE , {
         update: ( cache : ApolloCache<any> , { data }) => {

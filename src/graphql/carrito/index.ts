@@ -57,11 +57,6 @@ export const REMOVER_CONCEPTO_CARRITO = gql`
 
 export const CREAR_ORDEN_VENTA = gql`
     mutation crearOrdenVenta($input:CrearOrdenVenta){
-        crearOrdenVenta( input: $input){
-            id
-            conceptos 
-            vendedor 
-            cliente
-        }
+        crearOrdenVenta( input:$input)
     }
 `

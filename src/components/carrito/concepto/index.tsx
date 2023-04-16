@@ -1,15 +1,15 @@
-import { CButtonGroup, CCardBody, CCardImage, CCardText, CCardTitle, CCol, CRow } from '@coreui/react'
 import { CardBottomConcepto, CardButtonConcepto, CardContainerConcepto, ContainerConcepto } from './styled'
-import useCarrito from '../../../ventas/carrito/hooks/useCarrito'
+import { CButtonGroup, CCardBody, CCardImage, CCardText, CCardTitle, CCol, CRow } from '@coreui/react'
+import { CarritoContext } from '../../../ventas/carrito/context/CarritoContext'
+import { parseCantidad } from '../../../utils/parseCantidad'
 import { ConceptoCarrito } from '../../../types'
 import { cilTrash } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
-import { FC } from 'react'
-import { parseCantidad } from '../../../utils/parseCantidad'
+import { FC, useContext } from 'react'
 
 const Concepto : FC<ConceptoCarrito> = ( props ) => {
     
-    const { handleRemoverConcepto } = useCarrito()
+    const { handleRemoverConcepto } = useContext(CarritoContext)
     
     const { producto , cantidad , id , importe , total , iva } = props
 

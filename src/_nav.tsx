@@ -50,38 +50,52 @@ const _nav: NavElement[] = [
   },
   {
     primary: true,
-    component: CNavGroup,
-    name: 'Movimientos',
-    to: '/base',
-    icon: <CIcon icon={cilTransfer} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Entradas',
-        to: '/movimientos/entradas',
-        icon: <CIcon icon={cilArrowCircleRight} customClassName="nav-icon" />,
-      },
-      {
-        component: CNavItem,
-        name: 'Productos',
-        to: '/movimientos/productos',
-        icon: <CIcon icon={cilScreenDesktop} customClassName="nav-icon" />,
-      },
-      {
-        component: CNavItem,
-        name: 'Ventas',
-        to: '/movimientos/ventas',
-        icon: <CIcon icon={cilShortText} customClassName="nav-icon" />,
-      },
-      {
-        component: CNavItem,
-        name: 'Clientes',
-        to: '/movimientos/clientes',
-        icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
-      },
-    ],
+    component: CNavItem,
+    name: 'Productos',
+    to: '/movimientos/productos',
+    icon: <CIcon icon={cilScreenDesktop} customClassName="nav-icon" />,
   },
-  
+  {
+    primary: true,
+    component: CNavItem,
+    name: 'Ventas',
+    to: '/movimientos/ventas',
+    icon: <CIcon icon={cilShortText} customClassName="nav-icon" />,
+  },
+  {
+    primary: true,
+    component: CNavItem,
+    name: 'Clientes',
+    to: '/movimientos/clientes',
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+  },
+  // {
+  //   primary: true,
+  //   component: CNavGroup,
+  //   name: 'Movimientos',
+  //   to: '/base',
+  //   icon: <CIcon icon={cilTransfer} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Productos',
+  //       to: '/movimientos/productos',
+  //       icon: <CIcon icon={cilScreenDesktop} customClassName="nav-icon" />,
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Ventas',
+  //       to: '/movimientos/ventas',
+  //       icon: <CIcon icon={cilShortText} customClassName="nav-icon" />,
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Clientes',
+  //       to: '/movimientos/clientes',
+  //       icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+  //     },
+  //   ],
+  // },
 ]
 
 export default _nav

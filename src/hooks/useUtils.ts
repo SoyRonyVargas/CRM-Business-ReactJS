@@ -9,7 +9,10 @@ const useUtils = () => {
 
       const __date = _date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
 			
-			return `${__date}`
+      const _horas = _date.getHours()
+      const minutos = _date.getMinutes()
+
+			return `${__date} ${_horas}:${minutos}`
 
     }
     
