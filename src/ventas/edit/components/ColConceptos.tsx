@@ -6,7 +6,6 @@ import Concepto from './concepto'
 const ColConceptos = () => {
 
   const { 
-    orden,
     loading,
     conceptos
   } = useContext(OrdenVentaEditContext)
@@ -15,11 +14,6 @@ const ColConceptos = () => {
 
   return (
     <CCol xs={8}>
-       {/* <pre>
-          {
-              JSON.stringify( orden , null , 3 )
-          }
-        </pre> */}
       <h4>Conceptos</h4>
       <hr />
       {

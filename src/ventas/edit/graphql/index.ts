@@ -7,6 +7,7 @@ export const OBTENER_ORDEN_POR_ID = gql`
             fecha_entrega
             titulo_venta
             creado
+            status
             vendedor 
             {
               id
@@ -35,4 +36,11 @@ export const OBTENER_ORDEN_POR_ID = gql`
             }
         }
     }
+`
+
+export const ACTUALIZAR_STATUS_CONCEPTO = gql`
+  mutation actualizarStatusConceptoOrdenVenta($input:InputActualizarStatus)
+  {
+    actualizarStatusConceptoOrdenVenta(input: $input)
+  }
 `

@@ -163,6 +163,7 @@ export type OrdenVentaFull = {
   vendedor: Basic
   cliente: Basic
   creado: string
+  status: number
   id: string
 }
 
@@ -170,6 +171,7 @@ export type OrdenVentaListado = {
   total_productos: number
   titulo_venta: string
   importe: number
+  status: number
   creado: string
   cliente: Basic
   total: number

@@ -1,7 +1,5 @@
-import { CardBottomConcepto, CardButtonConcepto, CardContainerConcepto, ContainerConcepto } from './styled'
-import { CButtonGroup, CCardBody, CCardImage, CCardText, CCardTitle, CCol, CPlaceholder, CRow } from '@coreui/react'
-import { cilTrash } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
+import { CCardBody, CCardImage, CCardTitle, CCol, CPlaceholder, CRow } from '@coreui/react'
+import { CardContainerConcepto, ContainerConcepto } from './styled'
 import React from 'react'
 
 const LoaderConceptoCarrito = () => {

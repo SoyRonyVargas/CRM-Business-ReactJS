@@ -9,10 +9,20 @@ const useUtils = () => {
 
       const __date = _date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
 			
-      const _horas = _date.getHours()
-      const minutos = _date.getMinutes()
+      let _horas : number | string = _date.getHours()
+      let minutos : any = _date.getMinutes()
+      let typeHora = "AM"
+      
+      if( _horas > 12 )
+      {
+          typeHora = "PM"
+      }
+      if( minutos < 10 )
+      {
+          minutos = `0${minutos}`
+      }
 
-			return `${__date} ${_horas}:${minutos}`
+      return `${__date} ${_horas}:${minutos}${typeHora}`
 
     }
     

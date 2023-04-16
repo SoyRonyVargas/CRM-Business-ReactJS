@@ -1,10 +1,8 @@
-import { CNavGroup, CNavItem , CNavTitle} from '@coreui/react'
+import { CNavItem , CNavTitle} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { NavElement } from './types'
 import React from 'react'
 import {
-  cilTransfer,
-  cilArrowCircleRight,
   cilPeople,
   cilShortText,
   cilScreenDesktop,
@@ -51,16 +49,16 @@ const _nav: NavElement[] = [
   {
     primary: true,
     component: CNavItem,
-    name: 'Productos',
-    to: '/movimientos/productos',
-    icon: <CIcon icon={cilScreenDesktop} customClassName="nav-icon" />,
+    name: 'Ventas',
+    to: '/movimientos/ventas',
+    icon: <CIcon icon={cilShortText} customClassName="nav-icon" />,
   },
   {
     primary: true,
     component: CNavItem,
-    name: 'Ventas',
-    to: '/movimientos/ventas',
-    icon: <CIcon icon={cilShortText} customClassName="nav-icon" />,
+    name: 'Productos',
+    to: '/movimientos/productos',
+    icon: <CIcon icon={cilScreenDesktop} customClassName="nav-icon" />,
   },
   {
     primary: true,

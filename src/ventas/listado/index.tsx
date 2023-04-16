@@ -63,7 +63,14 @@ const index = () => {
                         {orden.cliente.nombre}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="col">
-                        <CBadge color="success">ACTIVO</CBadge>
+                      {
+                          orden.status == 0 &&
+                          <CBadge color="success ml-1">ACTIVO</CBadge>
+                      }
+                      {
+                          orden.status == 1 &&
+                          <CBadge color="info">Terminado</CBadge>
+                      }
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="col">
                         { parseCantidad(orden.importe) }

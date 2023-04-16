@@ -1,4 +1,4 @@
-import avatar8 from './../../assets/images/avatars/8.jpg'
+import avatar8 from './../../assets/user.png'
 import { cilUser, cilAccountLogout } from '@coreui/icons'
 import useAuthStore from '../../hooks/useAuthStore'
 import CIcon from '@coreui/icons-react'
@@ -6,7 +6,6 @@ import React, { FC } from 'react'
 
 import {
   CAvatar,
-  CBadge,
   CDropdown,
   CDropdownDivider,
   CDropdownHeader,
@@ -33,12 +32,12 @@ const AppHeaderDropdown : FC<{}> = () => {
         
         <CDropdownHeader className="bg-light fw-semibold py-2">Configuración</CDropdownHeader>
 
-        <CDropdownItem href="#">
+        {/* <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2" />
           Cuenta
         </CDropdownItem>
 
-        <CDropdownDivider />
+        <CDropdownDivider /> */}
         
         <CDropdownItem href="#" onClick={handleCerrarSesion}>
           <CIcon icon={cilAccountLogout} className="me-2" />

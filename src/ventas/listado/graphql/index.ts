@@ -6,6 +6,7 @@ export const OBTENER_ORDENES_VENTA = gql`
             id
             titulo_venta
             creado
+            status
             cliente {
                 id
                 nombre

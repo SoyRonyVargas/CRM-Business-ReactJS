@@ -8,6 +8,7 @@ export const ContainerConcepto = styled.article`
 
 export const CardContainerConcepto = styled(CCard)`
     padding: 10px;
+    padding-bottom: 0;
     border: none;
 `
 

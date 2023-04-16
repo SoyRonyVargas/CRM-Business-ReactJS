@@ -31,6 +31,7 @@ const MainProductosView = () => {
   debugger
 
   const { data } = useQuery<WrapperQuery<Producto[]>>(OBTENER_PRODUCTOS , {
+    fetchPolicy: "network-only",
     variables: {
       input: {
         pagina: busqueda.pagina,
