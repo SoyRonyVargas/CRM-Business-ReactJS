@@ -1,9 +1,9 @@
-import { lazy } from 'react'
 import CatalogoView from './views/catalogo'
+import { lazy } from 'react'
 
 // ORDENES DE VENTA
 
-const OrdenesVentaView = lazy(() => import('./views/movimientos/ordenes_venta'))
+const DashboardView = lazy(() => import('./dashboard'))
 
 // CLIENTES
 
@@ -14,7 +14,7 @@ const EditClienteView = lazy(() => import('./views/movimientos/clientes/edit'))
 // PRODUCTOS
 
 const CreateProductosView = lazy(() => import('./views/movimientos/productos/create'))
-const MainProductosView = lazy(() => import('./views/movimientos/productos'))
+const MainProductosView = lazy(() => import('./producto/listado'))
 const ProductoIDView = lazy(() => import('./views/productos/id'))
 const EditProductosView = lazy(() => import('./producto/editar'))
 
@@ -27,11 +27,10 @@ const CarritoView = lazy(() => import('./ventas/carrito'))
 
 const routes = [
   { path: '/', name: 'Inicio' },
-  { path: '/dashboard', name: 'Dashboard', element: OrdenesVentaView },
+  { path: '/dashboard', name: 'Dashboard', element: DashboardView },
   { path: '/carrito', name: 'Producto', element: CarritoView },
   { path: '/productos', name: 'Producto', element: CatalogoView },
   { path: '/producto/:id', name: 'Producto Por ID', element: ProductoIDView },
-  { path: '/movimientos/ordenes_venta', name: 'Orden Venta', element: OrdenesVentaView },
   { path: '/movimientos/clientes', name: 'Clientes', element: MainClientesView },
   { path: '/movimientos/clientes/nuevo', name: 'Nuevo', element: CreateClienteView },
   { path: '/movimientos/clientes/edit/:id', name: 'Editar', element: EditClienteView },

@@ -15,6 +15,7 @@ const useFichaProducto = () => {
     const { id } = useParams<"id">()
 
     const { loading , data : _producto } = useQuery<WrapperQuery<Producto>>(OBTENER_PRODUCTO , {
+        fetchPolicy: "network-only",
         variables: {
             input: id
         }
