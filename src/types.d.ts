@@ -82,13 +82,14 @@ export type Producto = Basic & {
 
 export type ProductoLight = Basic & {
   descripcion: string
+  existencias: number
   imagen: string
   precio: number
   creado: string
   status: number
 }
 
-export type CrearProducto = Pick<Producto, "descripcion" | "nombre" | "precio" | "status"> & {
+export type CrearProducto = Pick<Producto, "descripcion" | "nombre" | "precio" | "status"  | "existencias"> & {
   imagen?: string[]
 };
 
@@ -183,4 +184,16 @@ export type StateCarrito = {
   nombre_cliente: string
   titulo_venta: string
   seleccion: string
+}
+
+// BUSQUEDAS AVANZADAS
+
+export type MejorVendedor = {
+  vendedor: [Usuario]
+  total: number
+}
+
+export type MejorCliente = {
+  cliente: [Cliente]
+  total: number
 }

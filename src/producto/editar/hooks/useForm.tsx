@@ -1,3 +1,4 @@
+import { actualizarProductoSchema } from '../../../validations/movimientos/productos'
 import { Producto, ProductoLight, WrapperQuery } from '../../../types'
 import { OBTENER_PRODUCTO } from '../../../graphql/productos'
 import { useMutation, useQuery } from '@apollo/client'
@@ -82,8 +83,6 @@ const useForm = () : HEditProducto => {
         catch(err)
         {
             
-            debugger
-
             await new Promise(resolve => setTimeout(resolve, 1000));
             
             setLoading(false)
@@ -119,8 +118,6 @@ const useForm = () : HEditProducto => {
 
             setFieldValue("imagen", values.imagen.concat(nueva_imagen))
 
-            debugger
-
         }
         catch
         {
@@ -137,7 +134,7 @@ const useForm = () : HEditProducto => {
         values,
     } = useFormik({
         initialValues: producto?.obtenerProducto,
-        // validationSchema: createProductoSchema,
+        validationSchema: actualizarProductoSchema,
         enableReinitialize: true,
         onSubmit: handleActualizarProducto
     })

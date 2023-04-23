@@ -1,8 +1,8 @@
-import { createProductoSchema } from "../../../validations/movimientos/productos";
-import useProductoStore from "../../../hooks/useProductoStore";
+import { createProductoSchema } from "../../validations/movimientos/productos";
+import useProductoStore from "../../hooks/useProductoStore";
 import { Field, Form, Formik, FormikProps } from "formik";
 import { cilCloudUpload, cilSave } from "@coreui/icons";
-import { CrearProducto } from "../../../types";
+import { CrearProducto } from "../../types";
 import CIcon from "@coreui/icons-react";
 import Dropzone from "react-dropzone";
 import { useState } from "react";
@@ -27,8 +27,10 @@ const CreateProductosView = () => {
 
     const { loading, handleCreateProducto } = useProductoStore()
     const [preview, setPreview] = useState([])
+    
     const initialValues: CrearProducto = {
         descripcion: "",
+        existencias: 0,
         nombre: "",
         imagen: [],
         precio: 0,
@@ -93,6 +95,18 @@ const CreateProductosView = () => {
                                                         disabled={loading}
                                                         label="Precio"
                                                         name="precio"
+                                                        type="number"
+                                                    />
+                                                   
+                                                    <CFormInput
+                                                        feedbackInvalid={props.errors.existencias ? `${props.errors.existencias}` : null}
+                                                        className={`${props.errors.existencias ? "is-invalid" : ""} mb-2`}
+                                                        placeholder="Existencias del producto..."
+                                                        {...props.getFieldProps("existencias")}
+                                                        autoComplete={"none"}
+                                                        disabled={loading}
+                                                        label="Existencias"
+                                                        name="existencias"
                                                         type="number"
                                                     />
 

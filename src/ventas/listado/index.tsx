@@ -60,7 +60,7 @@ const index = () => {
                          { orden.total_productos }
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="col">
-                        {orden.cliente.nombre}
+                        {orden.cliente?.nombre}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="col">
                       {

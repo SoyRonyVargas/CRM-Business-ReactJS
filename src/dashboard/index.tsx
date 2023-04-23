@@ -1,5 +1,5 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import React from 'react'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import useDashboard from './hooks/useDashboard';
 
 const data = [
     {
@@ -48,6 +48,11 @@ const data = [
 
 const index = () => {
 
+    const {
+        mejores_vendedores,
+        mejores_clientes
+    } = useDashboard()
+
     return (
         <div>
             <section>
@@ -56,9 +61,9 @@ const index = () => {
 
                 <hr />
                 <BarChart
+                    data={mejores_vendedores}
                     width={1000}
                     height={300}
-                    data={data}
                     margin={{
                         top: 5,
                         right: 30,
@@ -67,11 +72,36 @@ const index = () => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="nombre" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="pv" fill="#8884d8" />
+                    <Bar dataKey="total" fill="#3E54AC" />
+                </BarChart>
+            </section>
+            
+            <section>
+                
+                <h4>Mejores clientes</h4>
+
+                <hr />
+                <BarChart
+                    data={mejores_clientes}
+                    width={1000}
+                    height={300}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="nombre" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="total" fill="#3E54AC" />
                 </BarChart>
             </section>
         </div>
